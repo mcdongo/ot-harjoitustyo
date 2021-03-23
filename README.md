@@ -1,5 +1,9 @@
-<h1>**Otsikko**</h1>
+<h1>Harjoitustyö</h1>
 
 Tässä on *ohjelmistotekniikan* harjoitustyön **repositorio**.
-Ensimmäisen viikon tehtävät on sijainnissa **/laskarit/viikko1**.
 Tästä tulee mukava *kurssi*.
+
+<h2>Tehtävät</h2>
+<h3>Viikko 1</h3>
+https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt
+https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt
