@@ -5,5 +5,5 @@ Tästä tulee mukava *kurssi*.
 
 <h2>Tehtävät</h2>
 <h3>Viikko 1</h3>
-https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt
-https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt
+[gitlox.txt](https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+[komentorivi.txt](https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
