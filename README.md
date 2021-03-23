@@ -1,6 +1,7 @@
 <h1>Ohjelmistotekniikan harjoitustyö</h1>
 
-Tässä on *ohjelmistotekniikan* harjoitustyön **repositorio**.
+23.3.2021: Tässä on *ohjelmistotekniikan* harjoitustyön **repositorio**.
+
 
 <h2>Tehtävät</h2>
 <h3>Viikko 1</h3>
