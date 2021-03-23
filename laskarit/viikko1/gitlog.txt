@@ -1,0 +1,113 @@
+commit e4e85bbca400b4fd91508609908070a213141f55
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:29:57 2021 +0200
+
+    puhdistustyö
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit cba5896a29e3eef0e93be1226623f0f233ec4743
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:26:55 2021 +0200
+
+    uusi hakemisto
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit fcbaf98c8ae6d52b0c7ead00bf51a77f9217c662
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:22:16 2021 +0200
+
+    Muutoksia muutoksien perään
+
+ eka.txt    | 6 +-----
+ kolmas.txt | 3 ++-
+ 2 files changed, 3 insertions(+), 6 deletions(-)
+
+commit d2b4b788234e7fe1713e84cd8437e752a3ad6da7
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:18:45 2021 +0200
+
+    uudelleenvalinta
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7c3978fc47c881a961ef22ca1099dc8fad7acbc0
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:17:47 2021 +0200
+
+    hävitys
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 7800df94ab6ff21e6c610fb8af38eecbbc782fb7
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:16:58 2021 +0200
+
+    muutoksia
+
+ tiedosto.txt | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit cd962f94a30426b210e799911f468f03922e1875
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:14:48 2021 +0200
+
+    bee movie
+
+ tiedosto.txt | 472 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 472 insertions(+)
+
+commit 2443c0fd91ea1cc71fcb98cef44aca6fb4f92291
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:11:12 2021 +0200
+
+    lisätty
+
+ stuff/tekstitiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 04d34a470c0834c1a0b66827b60c9f5cc6a33de4
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:10:29 2021 +0200
+
+    muutoksia
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 43f058a4d5df4ea012b991427729b7f7b445aa3d
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:09:47 2021 +0200
+
+    lisäys
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit fddecff5ac37ea7bb12e388b61fe2f73602d69d6
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:06:06 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit a40a995fe2d810b0f22845a3d1598f58a27bc9b2
+Author: Leevi Kokkinen <leevi.kokkinen@gmail.com>
+Date:   Tue Mar 23 20:03:32 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
