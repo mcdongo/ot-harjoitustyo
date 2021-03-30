@@ -11,6 +11,6 @@
 ...
 testi
 
-<p>[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)</p>
-<p>[Tuntikirnapito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)</p>
+[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)<br>
+[Tuntikirnapito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
