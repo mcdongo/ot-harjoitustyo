@@ -9,4 +9,6 @@ Pelaajalla on lähtökohtaisesti miekka sekä kilpi. Riippuen kerroksesta, saatt
 <h2>Ominaisuuksia:</h2>
 * Pelaajan tiedot tallennetaan tietokantaan (Mikä kerros, mitä tavaroita löytyy laukusta, elämäpisteiden tilanne jne)<br>
 * Kerroksia generoidaan tarvittaessa satunnaisesti (ehkä jokin endless mode tarjolle)<br>
-* Peli on suunniteltu grid-tyyliin, eli kaikki asiat liikkuvat ennalta määrättyissä "laatikoissa" laatikosta toiseen
+* Peli on suunniteltu grid-tyyliin, eli kaikki asiat liikkuvat ennalta määrättyissä "laatikoissa" laatikosta toiseen<br>
+* Pelaajalle sallitaan normaalien kontrollien lisäksi muutama pikanäppäin, joihin pelaaja voi linkittää asioita laukusta; eli ei tarvitse avata menua käyttääkseen jotain esinettä, jota tarvitsee usein<br>
+* Laukun sisällön sekä menun avaaminen pausettaa pelin
