@@ -7,6 +7,6 @@ Kerroksista saattaa löytyä jonkin kaltaisia aivopähkinöitä, vihollisia ja e
 Pelaajalla on lähtökohtaisesti miekka sekä kilpi. Riippuen kerroksesta, saattaa huoneet olla pimeitä, eli pelaaja näkee vain lyhyeelle alueelle ympärillään.
 <hr>
 <h2>Ominaisuuksia:</h2>
-* Pelaajan tiedot tallennetaan tietokantaan (Mikä kerros, mitä tavaroita löytyy laukusta, elämäpisteiden tilanne jne)
-* Kerroksia generoidaan tarvittaessa satunnaisesti (ehkä jokin endless mode tarjolle)
+* Pelaajan tiedot tallennetaan tietokantaan (Mikä kerros, mitä tavaroita löytyy laukusta, elämäpisteiden tilanne jne)<br>
+* Kerroksia generoidaan tarvittaessa satunnaisesti (ehkä jokin endless mode tarjolle)<br>
 * Peli on suunniteltu grid-tyyliin, eli kaikki asiat liikkuvat ennalta määrättyissä "laatikoissa" laatikosta toiseen
