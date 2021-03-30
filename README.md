@@ -10,3 +10,7 @@
 [komentorivi.txt](https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 ...
 testi
+
+[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+[Tuntikirnapito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
