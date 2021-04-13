@@ -6,6 +6,7 @@
 <p><a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md">Vaatimusmäärittely</a></p>
 <p><a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md">Tuntikirjanpito</a></p>
 
+<hr>
 <h1>Komentorivitoiminnot</h1>
 <hr>
 
