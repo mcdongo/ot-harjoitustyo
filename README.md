@@ -8,8 +8,10 @@
 
 <h1>Komentorivitoiminnot</h1>
 <hr>
+
 Ohjelma asennetaan komennolla:
 > poetry install
+
 Ohjelman pystyy suorittaa komennolla:
 > poetry run invoke start
 
