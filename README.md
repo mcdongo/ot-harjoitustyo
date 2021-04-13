@@ -8,11 +8,13 @@
 
 <h1>Komentorivitoiminnot</h1>
 <hr>
-Ohjelman pystyy suorittaa komennolla:<br>
+Ohjelma asennetaan komennolla:
+> poetry install
+Ohjelman pystyy suorittaa komennolla:
 > poetry run invoke start
-<br>
-Testit pystyy suorittaa komennolla:<br>
+
+Testit pystyy suorittaa komennolla:
 > poetry run invoke test
-<br>
+
 Ja testikattavuuden saa suorittamalla komennon: <br>
 > poetry run invoke coverage-report
