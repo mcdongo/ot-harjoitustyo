@@ -1,17 +1,18 @@
-<h1>Ohjelmistotekniikan harjoitustyö</h1>
+<h1>Cave Crawler -peli</h1>
+<hr> Sovellus on 2-ulotteinen ylhäältäkuvattu luolastoseikkailu, jossa pelaajan on tarkoitus edetä kerroksesta toiseen löytämällä kerroksesta rappuset.
 
-23.3.2021: Tässä on *ohjelmistotekniikan* harjoitustyön **repositorio**.
+<h1>Dokumentaatio</h1>
+<hr>
+<p>[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+<p>[Tuntikirjanpito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
-
-<h2>Tehtävät</h2>
-<h3>Viikko 1</h3>
-
-[gitlox.txt](https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-[komentorivi.txt](https://github.com/mcdongo/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
-...
-testi
-
-[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+<h1>Komentorivitoiminnot</h1>
+<hr>
+Ohjelman pystyy suorittaa komennolla:<br>
+>poetry run invoke start
 <br>
-[Tuntikirjanpito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
-
+Testit pystyy suorittaa komennolla:<br>
+>poetry run invoke test
+<br>
+Ja testikattavuuden saa suorittamalla komennon: <br>
+>poetry run invoke coverage-report
