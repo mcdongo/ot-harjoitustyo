@@ -3,8 +3,8 @@
 
 <h1>Dokumentaatio</h1>
 <hr>
-[Vaatimusmäärittely](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md) <br>
-[Tuntikirjanpito](https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+<a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md">Vaatimusmäärittely</a>
+<a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md">Tuntikirjanpito</a>
 
 <h1>Komentorivitoiminnot</h1>
 <hr>
