@@ -8,3 +8,7 @@
 /htmlcov
 /src/__pycache__
 /src/tests/__pycache__
+/laskarit/viikko2/maksukortti/src/tests/__pycache__/maksukortti_test.cpython-38-pytest-6.2.3.pyc
+/laskarit/viikko2/unicafe/src/__pycache__/
+/laskarit/viikko2/unicafe/src/tests/__pycache__/
+.coverage

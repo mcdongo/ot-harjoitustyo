@@ -13,7 +13,12 @@ class GameLoop:
         while True:
             if self._handle_events() == False:
                 break
-            
+
+            current_time = self._clock.get_ticks()
+            self._level.update(current_time)
+
+            if self._level.get_next_level():
+                return True
             self._render()
 
             self._clock.tick(60)
@@ -37,3 +42,6 @@ class GameLoop:
         self._renderer.render()
 
         pg.display.update()
+
+    def next_level(self, level):
+        self._level = level

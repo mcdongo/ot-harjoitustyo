@@ -2,8 +2,8 @@
 <hr>
 Sovellus on reaaliaikainen ylhäältäkuvattu dungeon crawler -tyyppinen peli, jossa on samanlainen taistelujärjestelmä, joka tunnetaan Legend of Zeldasta.
 Peli toteutetaan Pythonilla ja tämän pygame-kirjastolla.<br>
-Peli koostuu kerroksista, joissa on rappuset seuraavaan kerrokseen jossakin ja pelaajan on määrä löytää kyseiset rappuset edetäkseen.
-Kerroksista saattaa löytyä jonkin kaltaisia aivopähkinöitä, vihollisia ja esineitä, joista on hyötyä pelaajalle.
+Peli koostuu kerroksista, joissa on rappuset seuraavaan kerrokseen jossakin ja pelaajan on määrä löytää kyseiset rappuset edetäkseen. (tehty)
+Kerroksista saattaa löytyä jonkin kaltaisia aivopähkinöitä, vihollisia ja esineitä, joista on hyötyä pelaajalle. (osittain tehty)
 Pelaajalla on lähtökohtaisesti miekka sekä kilpi. Riippuen kerroksesta, saattaa huoneet olla pimeitä, eli pelaaja näkee vain lyhyeelle alueelle ympärillään.
 <hr>
 <h2>Ominaisuuksia:</h2>

@@ -1,5 +1,6 @@
 import pygame as pg
 
+
 class Clock:
     def __init__(self):
         self._clock = pg.time.Clock()
@@ -8,4 +9,4 @@ class Clock:
         self._clock.tick(fps)
 
     def get_ticks(self):
-        pg.time.get_ticks()
+        return pg.time.get_ticks()

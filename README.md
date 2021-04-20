@@ -5,6 +5,7 @@
 <hr>
 <p><a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md">Vaatimusmäärittely</a></p>
 <p><a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md">Tuntikirjanpito</a></p>
+<p><a href="https://github.com/mcdongo/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md">Arkkitehtuuri</a></p>
 
 <hr>
 <h1>Komentorivitoiminnot</h1>
@@ -21,3 +22,6 @@ Testit pystyy suorittaa komennolla:
 
 Ja testikattavuuden saa suorittamalla komennon: <br>
 > poetry run invoke coverage-report
+
+Pylintillä voi testata koodin siisteyttä seuraavalla komennolla: <br>
+> poetry run invoke lint
