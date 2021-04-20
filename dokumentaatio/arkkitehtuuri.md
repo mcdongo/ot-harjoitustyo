@@ -1,1 +1,1 @@
-<img src="arkkitehtuuri.png">
+<img src="arkkitehtuuri.jpg">
