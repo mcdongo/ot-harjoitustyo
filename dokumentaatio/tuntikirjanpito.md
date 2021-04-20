@@ -9,3 +9,5 @@
 |19.4   |3  |Lisäsin mahdollisuuden lisätä useampia leveleitä peliin sekä rappuset seuraavaan tasoon|
 |20.4   |3  |Lisäsin vihollisen (ei grafiikkaa, liikkuu vain päättömästi ympäriinsä tällä hetkellä) ja päivitin koodin struktuuria siistimmäksi|
 
+Yhteensä: 15h
+
