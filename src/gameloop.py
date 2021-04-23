@@ -34,6 +34,8 @@ class GameLoop:
                     self._level.move_player(dy=-self._cell_size)
                 if e.key == pg.K_DOWN:
                     self._level.move_player(dy=self._cell_size)
+                if e.key == pg.K_ESCAPE:
+                    return False
 
             elif e.type == pg.QUIT:
                 return False

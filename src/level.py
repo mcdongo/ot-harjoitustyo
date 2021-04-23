@@ -56,6 +56,7 @@ class Level:
             if enemy.should_move(current_time):
                 self._move_enemy(enemy)
                 enemy.previous_move_time = current_time
+        self.player.update(current_time)
 
     def move_player(self, dx=0, dy=0):
         if dx > 0:
