@@ -8,6 +8,8 @@
 |18.4   |1  |Lisäsin "kameran" (kun pelaaja liikkuu, muut asiat liikkuvat suhteessa pelaajaan) peliin|
 |19.4   |3  |Lisäsin mahdollisuuden lisätä useampia leveleitä peliin sekä rappuset seuraavaan tasoon|
 |20.4   |3  |Lisäsin vihollisen (ei grafiikkaa, liikkuu vain päättömästi ympäriinsä tällä hetkellä) ja päivitin koodin struktuuria siistimmäksi|
+|23.4   |2  |Loin spritesheet-luokan sekä animaation pelaajalle|
+|24.4   |3  |Lyömisanimaatio pelaajalle, lisää grafiikkaa, lyömistoiminto toimii, mahdollisuus gui:n tekemiseen tehty|
 
-Yhteensä: 15h
+Yhteensä: 20h
 

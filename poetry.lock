@@ -155,6 +155,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pygame-gui"
+version = "0.5.7"
+description = "A GUI module for pygame 2"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+pygame = ">=1.9.5"
+
+[[package]]
 name = "pylint"
 version = "2.7.4"
 description = "python code static checker"
@@ -220,7 +231,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "dd6b195e11fa0224a1d7d8c366ca381067c922795a89f56b92defeb5533b1a22"
+content-hash = "8694b1ed88746163ab06242906e6d2c4fcd6310ad671e058cc01996f95262b37"
 
 [metadata.files]
 astroid = [
@@ -396,6 +407,9 @@ pygame = [
     {file = "pygame-2.0.1-pp37-pypy37_pp73-manylinux2010_i686.whl", hash = "sha256:a4e35d89b6754941e82df1ce980a1c370943d3c076938d94ed1e48165dd6a11b"},
     {file = "pygame-2.0.1-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:b812285d23b5644c643a6ae30553a772f935f47f61826660b108b8727936384b"},
     {file = "pygame-2.0.1.tar.gz", hash = "sha256:8b1e7b63f47aafcdd8849933b206778747ef1802bd3d526aca45ed77141e4001"},
+]
+pygame-gui = [
+    {file = "pygame_gui-0.5.7.tar.gz", hash = "sha256:a699c6c5c3f080c37955a1f53bf4d4d8c48b77b49ae3fe5eec925f05b8c1145a"},
 ]
 pylint = [
     {file = "pylint-2.7.4-py3-none-any.whl", hash = "sha256:209d712ec870a0182df034ae19f347e725c1e615b2269519ab58a35b3fcbbe7a"},

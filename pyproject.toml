@@ -8,6 +8,7 @@ authors = ["Leevi Kokkinen <leevi.kokkinen@gmail.com>"]
 python = "^3.8"
 pygame = "^2.0.1"
 invoke = "^1.5.0"
+pygame-gui = "^0.5.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.3"

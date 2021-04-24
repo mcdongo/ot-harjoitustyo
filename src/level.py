@@ -42,6 +42,7 @@ class Level:
                     self.stairs = Stairs(normalized_x, normalized_y)
                 elif cell == 4:
                     self.enemies.add(Enemy(normalized_x, normalized_y))
+                    self.floors.add(Floor(normalized_x, normalized_y))
 
         self.all_sprites.add(
             self.walls,
@@ -56,7 +57,29 @@ class Level:
             if enemy.should_move(current_time):
                 self._move_enemy(enemy)
                 enemy.previous_move_time = current_time
-        self.player.update(current_time)
+            enemy.update()
+
+        
+        if self.player.is_moving:
+            if abs(self.player.moved) == abs(self.player.move_limit):
+                self.end_animation(self.player)
+            else:
+                self.player.update(current_time)
+                self.move_player(self.player.dx/25, self.player.dy/25)
+        
+        if self.player.attack:
+            self.player.update(current_time)
+
+    def start_player_movement(self, dx=0, dy=0):
+        self.player.is_moving = True
+        self.player.move_limit = dx + dy
+        self.player.moved = 0
+        self.player.dx = dx
+        self.player.dy = dy
+
+    def end_animation(self, entity):
+        entity.is_moving = False
+        entity.image = entity.images[entity.direction][0]        
 
     def move_player(self, dx=0, dy=0):
         if dx > 0:
@@ -68,9 +91,14 @@ class Level:
         if dy < 0:
             self.player.change_direction(0)
         if not self._entity_can_move(self.player, dx, dy):
+            self.end_animation(self.player)
             return
 
+        self.player.moved += dx + dy
+
         scroll_camera = False
+
+        print(self.player.moved, self.player.move_limit)
 
         if self.player.rect.right >= 350:
             scroll_camera = True
@@ -93,12 +121,17 @@ class Level:
         entity.rect.move_ip(dx, dy)
 
         colliding_walls = pg.sprite.spritecollide(entity, self.walls, False)
+        colliding_enemies = pg.sprite.spritecollide(entity, self.enemies, False)
 
+        colliding_enemies = not colliding_enemies
         can_move = not colliding_walls
 
         entity.rect.move_ip(-dx, -dy)
 
-        return can_move
+        if colliding_enemies or can_move:
+            return True
+
+        return False
 
     def _move_enemy(self, enemy):
         dx, dy = 0, 0
@@ -131,3 +164,20 @@ class Level:
 
     def get_next_level(self):
         return self.next_level
+
+    def attack(self, entity):
+        entity.attack = True
+        dx, dy = 0, 0
+        if entity.direction == 0:
+            dy = -5
+        if entity.direction == 1:
+            dx = 5
+        if entity.direction == 2:
+            dy = 5
+        if entity.direction == 3:
+            dx = -5
+
+        entity.rect.move_ip(dx, dy)
+        for enemy in pg.sprite.spritecollide(entity, self.enemies, False):
+            enemy.hurt()
+        entity.rect.move_ip(-dx, -dy)
