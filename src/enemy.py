@@ -95,8 +95,8 @@ class Enemy(pg.sprite.Sprite):
                     visited[cur_pos[0]][cur_pos[1]+1] = True
 
             if cur_pos == goal:
-                print("Shortest:")
-                print(new_path)
+                #print("Shortest:")
+                #print(new_path)
                 new_path.pop(0)
                 self.move_queue = new_path
                 break

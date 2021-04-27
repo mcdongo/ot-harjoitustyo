@@ -19,7 +19,7 @@ class Spritesheet():
             if colorkey == -1:
                 colorkey = image.get_at((0, 0))
             image.set_colorkey(colorkey)
-        return image.convert_alpha()
+        return image
 
     def images_at(self, rects, colorkey=None):
         return [self.image_at(rect, colorkey) for rect in rects]

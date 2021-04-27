@@ -54,6 +54,8 @@ class Level:
             self.player
         )
 
+        self.refresh_enemy_queue()
+
         if self.player.rect.x < 300 or self.player.rect.x > 400:
             while (self.player.rect.x < 300 or self.player.rect.x > 400):
                 print(self.player.rect.x)

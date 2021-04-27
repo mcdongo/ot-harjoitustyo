@@ -20,8 +20,8 @@ class TestPlayer(unittest.TestCase):
 
         self.assert_direction_facing_equal(self.level_1.player, 2)
 
-        self.level_1.move_player(dx=-CELL_SIZE)
+        self.level_1.move_player(direction_x=-CELL_SIZE)
         self.assert_direction_facing_equal(self.level_1.player, 3)
 
-        self.level_1.move_player(dx=CELL_SIZE)
+        self.level_1.move_player(direction_x=CELL_SIZE)
         self.assert_direction_facing_equal(self.level_1.player, 1)

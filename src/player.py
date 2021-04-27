@@ -24,6 +24,7 @@ class Player(pg.sprite.Sprite):
         self.map_pos_x = map_pos_x
         self.map_pos_y = map_pos_y
         self.health = 10
+        self.moved = 0
 
     def change_direction(self, direction):
         self.direction = direction
