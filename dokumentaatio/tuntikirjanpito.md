@@ -10,6 +10,8 @@
 |20.4   |3  |Lisäsin vihollisen (ei grafiikkaa, liikkuu vain päättömästi ympäriinsä tällä hetkellä) ja päivitin koodin struktuuria siistimmäksi|
 |23.4   |2  |Loin spritesheet-luokan sekä animaation pelaajalle|
 |24.4   |3  |Lyömisanimaatio pelaajalle, lisää grafiikkaa, lyömistoiminto toimii, mahdollisuus gui:n tekemiseen tehty|
+|25.4   |1  |Lisäsin mahdollisuuden kääntää pelaajan suuntaa ilman, että pelaaja itse liikkuu (vasen shift+nuolinäppäin)|
+|27.4   |4  |Loin leveyshakua höydyntäen tekoälyn viholliselle|
 
-Yhteensä: 20h
+Yhteensä: 25h
 

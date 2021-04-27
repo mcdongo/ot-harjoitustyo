@@ -15,34 +15,36 @@ class Level:
         self.floors = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
         self.all_sprites = pg.sprite.Group()
-
-        self._initialize_sprites(level_map)
-
+        self.level_map = level_map
         self.offset_x = 0
         self.offset_y = 0
+        self._initialize_sprites(level_map)
 
     def _initialize_sprites(self, level_map):
         height = len(level_map)
         width = len(level_map[0])
 
-        for y in range(height):
-            for x in range(width):
-                cell = level_map[y][x]
-                normalized_x = x * self.cell_size
-                normalized_y = y * self.cell_size
+        for pos_y in range(height):
+            for pos_x in range(width):
+                cell = level_map[pos_y][pos_x]
+                normalized_x = pos_x * self.cell_size
+                normalized_y = pos_y * self.cell_size
 
                 if cell == 0:
                     self.floors.add(Floor(normalized_x, normalized_y))
                 elif cell == 1:
                     self.walls.add(Wall(normalized_x, normalized_y))
                 elif cell == 2:
-                    self.player = Player(normalized_x, normalized_y)
+                    self.player = Player(pos_x, pos_y, normalized_x, normalized_y)
                     self.floors.add(Floor(normalized_x, normalized_y))
+                    self.level_map[pos_y][pos_x] = self.player
                 elif cell == 3:
                     self.stairs = Stairs(normalized_x, normalized_y)
                 elif cell == 4:
-                    self.enemies.add(Enemy(normalized_x, normalized_y))
+                    enemy = Enemy(pos_x, pos_y, normalized_x, normalized_y)
+                    self.enemies.add(enemy)
                     self.floors.add(Floor(normalized_x, normalized_y))
+                    self.level_map[pos_y][pos_x] = enemy
 
         self.all_sprites.add(
             self.walls,
@@ -52,6 +54,25 @@ class Level:
             self.player
         )
 
+        if self.player.rect.x < 300 or self.player.rect.x > 400:
+            while (self.player.rect.x < 300 or self.player.rect.x > 400):
+                print(self.player.rect.x)
+                if self.player.rect.x < 300:
+                    self.scroll_camera(direction_x=-50, direction_y=0, player=True)
+                else:
+                    self.scroll_camera(direction_x=50, direction_y=0, player=True)
+      
+        if self.player.rect.y <= 150 or self.player.rect.y >= 250:
+            while (self.player.rect.y < 150 or self.player.rect.y > 250):
+                if self.player.rect.y < 150:
+                    self.scroll_camera(direction_x=0, direction_y=50, player=True)
+                else:
+                    self.scroll_camera(direction_x=0, direction_y=-50, player=True)
+
+    def refresh_enemy_queue(self):
+        for enemy in self.enemies:
+            enemy.bfs(self.level_map, self.player)
+
     def update(self, current_time):
         for enemy in self.enemies:
             if enemy.should_move(current_time):
@@ -59,46 +80,60 @@ class Level:
                 enemy.previous_move_time = current_time
             enemy.update()
 
-        
         if self.player.is_moving:
             if abs(self.player.moved) == abs(self.player.move_limit):
                 self.end_animation(self.player)
             else:
                 self.player.update(current_time)
-                self.move_player(self.player.dx/25, self.player.dy/25)
-        
+                self.move_player(self.player.direction_x/25, self.player.direction_y/25)
         if self.player.attack:
             self.player.update(current_time)
 
-    def start_player_movement(self, dx=0, dy=0):
+    def start_player_movement(self, direction_x=0, direction_y=0):
         self.player.is_moving = True
-        self.player.move_limit = dx + dy
+        self.player.move_limit = direction_x + direction_y
         self.player.moved = 0
-        self.player.dx = dx
-        self.player.dy = dy
-
-    def end_animation(self, entity):
-        entity.is_moving = False
-        entity.image = entity.images[entity.direction][0]        
-
-    def move_player(self, dx=0, dy=0):
-        if dx > 0:
-            self.player.change_direction(1)
-        if dx < 0:
-            self.player.change_direction(3)
-        if dy > 0:
-            self.player.change_direction(2)
-        if dy < 0:
-            self.player.change_direction(0)
-        if not self._entity_can_move(self.player, dx, dy):
+        self.player.direction_x = direction_x
+        self.player.direction_y = direction_y
+        if not self._entity_can_move(self.player, direction_x, direction_y):
             self.end_animation(self.player)
             return
 
-        self.player.moved += dx + dy
+        self.refresh_enemy_queue()
+
+        self.move_entity_on_map(direction_x, direction_y, self.player)
+
+    def move_entity_on_map(self, direction_x, direction_y, entity):
+        cur_pos = (entity.map_pos_y, entity.map_pos_x)
+        print(cur_pos)
+        next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
+        self.level_map[cur_pos[0]][cur_pos[1]] = 0
+        self.level_map[next_pos[0]][next_pos[1]] = entity
+        entity.map_pos_y = next_pos[0]
+        entity.map_pos_x = next_pos[1]
+
+    def end_animation(self, entity):
+        entity.is_moving = False
+        entity.image = entity.images[entity.direction][0]
+
+    def move_player(self, direction_x=0, direction_y=0):
+        if direction_x > 0:
+            self.player.change_direction(1)
+        if direction_x < 0:
+            self.player.change_direction(3)
+        if direction_y > 0:
+            self.player.change_direction(2)
+        if direction_y < 0:
+            self.player.change_direction(0)
+        if not self._entity_can_move(self.player, direction_x, direction_y):
+            self.end_animation(self.player)
+            return
+
+        self.player.moved += direction_x + direction_y
 
         scroll_camera = False
 
-        print(self.player.moved, self.player.move_limit)
+        #print(self.player.moved, self.player.move_limit)
 
         if self.player.rect.right >= 350:
             scroll_camera = True
@@ -110,15 +145,15 @@ class Level:
             scroll_camera = True
 
         if scroll_camera:
-            self.scroll_camera(dx, dy)
+            self.scroll_camera(direction_x, direction_y)
         else:
-            self.player.rect.move_ip(dx, dy)
+            self.player.rect.move_ip(direction_x, direction_y)
 
         if self._check_for_stairs():
             self.next_level = True
 
-    def _entity_can_move(self, entity, dx=0, dy=0):
-        entity.rect.move_ip(dx, dy)
+    def _entity_can_move(self, entity, direction_x=0, direction_y=0):
+        entity.rect.move_ip(direction_x, direction_y)
 
         colliding_walls = pg.sprite.spritecollide(entity, self.walls, False)
         colliding_enemies = pg.sprite.spritecollide(entity, self.enemies, False)
@@ -126,36 +161,51 @@ class Level:
         colliding_enemies = not colliding_enemies
         can_move = not colliding_walls
 
-        entity.rect.move_ip(-dx, -dy)
+        entity.rect.move_ip(-direction_x, -direction_y)
 
-        if colliding_enemies or can_move:
-            return True
-
-        return False
+        return can_move
 
     def _move_enemy(self, enemy):
-        dx, dy = 0, 0
-        direction = randint(0, 3)
-        if direction == 0:
-            dy = -50
-        if direction == 1:
-            dx = 50
-        if direction == 2:
-            dy = 50
-        if direction == 3:
-            dx = -50
+        direction_x, direction_y = 0, 0
+        cur_pos_x = enemy.map_pos_x
+        cur_pos_y = enemy.map_pos_y
 
-        if not self._entity_can_move(enemy, dx, dy):
+        if enemy.move_queue != []:
+            next_move = enemy.move_queue.pop(0)
+            if cur_pos_y > next_move[0]:
+                direction_y = -50
+            if cur_pos_y < next_move[0]:
+                direction_y = 50
+            if cur_pos_x > next_move[1]:
+                direction_x = -50
+            if cur_pos_x < next_move[1]:
+                direction_x = 50
+
+        else:
+            direction = randint(0, 3)
+            if direction == 0:
+                direction_y = -50
+            if direction == 1:
+                direction_x = 50
+            if direction == 2:
+                direction_y = 50
+            if direction == 3:
+                direction_x = -50
+
+        if not self._entity_can_move(enemy, direction_x, direction_y):
             return
+        self.move_entity_on_map(direction_x, direction_y, enemy)
+        enemy.rect.move_ip(direction_x, direction_y)
 
-        enemy.rect.move_ip(dx, dy)
-
-    def scroll_camera(self, dx, dy):
-        self.offset_x -= dx
-        self.offset_y -= dy
+    def scroll_camera(self, direction_x, direction_y, player=False):
+        self.offset_x -= direction_x
+        self.offset_y -= direction_y
         for sprite in self.all_sprites:
-            if sprite != self.player:
-                sprite.rect.move_ip(-dx, -dy)
+            if not player:
+                if sprite != self.player:
+                    sprite.rect.move_ip(-direction_x, -direction_y)
+            else:
+                sprite.rect.move_ip(-direction_x, direction_y)
 
     def _check_for_stairs(self):
         on_stairs = pg.sprite.collide_rect(self.player, self.stairs)
@@ -167,17 +217,21 @@ class Level:
 
     def attack(self, entity):
         entity.attack = True
-        dx, dy = 0, 0
+        direction_x, direction_y = 0, 0
         if entity.direction == 0:
-            dy = -5
+            direction_y = -5
         if entity.direction == 1:
-            dx = 5
+            direction_x = 5
         if entity.direction == 2:
-            dy = 5
+            direction_y = 5
         if entity.direction == 3:
-            dx = -5
+            direction_x = -5
 
-        entity.rect.move_ip(dx, dy)
+        entity.rect.move_ip(direction_x, direction_y)
         for enemy in pg.sprite.spritecollide(entity, self.enemies, False):
             enemy.hurt()
-        entity.rect.move_ip(-dx, -dy)
+        entity.rect.move_ip(-direction_x, -direction_y)
+
+    def update_enemy_queue(self):
+        for enemy in self.enemies:
+            enemy.bfs(self.level_map, self.player)

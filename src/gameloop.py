@@ -9,10 +9,11 @@ class GameLoop:
         self._clock = clock
         self._cell_size = cell_size
         self._gui = gui
+        self.shift = False
 
     def start(self):
         while True:
-            if self._handle_events() == False:
+            if self._handle_events() is False:
                 break
 
             current_time = self._clock.get_ticks()
@@ -28,31 +29,57 @@ class GameLoop:
             self._clock.tick(60)
 
     def _handle_events(self):
-        for e in self._event_queue.get():
-            if e.type == pg.KEYDOWN:
+        for event in self._event_queue.get():
+            if event.type == pg.KEYDOWN:
+
+                if event.key == pg.K_LSHIFT:
+                    self.shift = True
                 if not self._level.player.is_moving:
-                    if e.key == pg.K_LEFT:
-                        self._level.start_player_movement(dx=-self._cell_size)
-                    if e.key == pg.K_RIGHT:
-                        self._level.start_player_movement(dx=self._cell_size)
-                    if e.key == pg.K_UP:
-                        self._level.start_player_movement(dy=-self._cell_size)
-                    if e.key == pg.K_DOWN:
-                        self._level.start_player_movement(dy=self._cell_size)
-                    if e.key == pg.K_SPACE:
+                    if event.key == pg.K_LEFT:
+                        if not self.shift:
+                            self._level.start_player_movement(direction_x=-self._cell_size)
+                        else:
+                            self.shift_function(direction_x=-self._cell_size)
+
+                    if event.key == pg.K_RIGHT:
+                        if not self.shift:
+                            self._level.start_player_movement(direction_x=self._cell_size)
+                        else:
+                            self.shift_function(direction_x=self._cell_size)
+
+                    if event.key == pg.K_UP:
+                        if not self.shift:
+                            self._level.start_player_movement(direction_y=-self._cell_size)
+                        else:
+                            self.shift_function(direction_y=-self._cell_size)
+
+                    if event.key == pg.K_DOWN:
+                        if not self.shift:
+                            self._level.start_player_movement(direction_y=self._cell_size)
+                        else:
+                            self.shift_function(direction_y=self._cell_size)
+
+                    if event.key == pg.K_r:
+                        self._level.refresh_enemy_queue()
+
+                    if event.key == pg.K_SPACE:
                         self._level.attack(self._level.player)
-                if e.key == pg.K_ESCAPE:
+                if event.key == pg.K_ESCAPE:
                     return False
-            
-            if e.type == pg.USEREVENT:
-                if e.user_type == pygame_gui.UI_BUTTON_PRESSED:
-                    if e.ui_element == self._gui.hello_button:
+
+            if event.type == pg.USEREVENT:
+                if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                    if event.ui_element == self._gui.hello_button:
                         print("hello world")
 
-            elif e.type == pg.QUIT:
+            elif event.type == pg.QUIT:
                 return False
 
-            self._gui.manager.process_events(e)
+            self._gui.manager.process_events(event)
+
+            if event.type == pg.KEYUP:
+                if event.key == pg.K_LSHIFT:
+                    self.shift = False
 
     def _render(self):
         self._renderer.render()
@@ -61,3 +88,14 @@ class GameLoop:
 
     def next_level(self, level):
         self._level = level
+
+    def shift_function(self, direction_x=0, direction_y=0):
+        if self.shift:
+            if direction_y < 0:
+                self._level.player.change_direction(0)
+            if direction_x > 0:
+                self._level.player.change_direction(1)
+            if direction_y > 0:
+                self._level.player.change_direction(2)
+            if direction_x < 0:
+                self._level.player.change_direction(3)

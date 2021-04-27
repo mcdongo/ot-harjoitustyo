@@ -1,25 +1,28 @@
 import pygame as pg
 from spritesheet import Spritesheet
 
+SPRITE_SHEET = Spritesheet("player-spritesheet.png")
+STAB_SPRITE_SHEET = Spritesheet("playerstab.png")
+
 class Player(pg.sprite.Sprite):
-    def __init__(self, x=0, y=0):
+    def __init__(self, map_pos_x, map_pos_y, pos_x=0, pos_y=0):
         super().__init__()
         self.direction = 2
         self.frame = 0
         self.last_updated = 0
-        self.sprite_sheet = Spritesheet("player-spritesheet.png")
-        self.images = [self.sprite_sheet.load_strip((0, i*50, 50, 50), 4, -1)
+        self.images = [SPRITE_SHEET.load_strip((0, i*50, 50, 50), 4, -1)
                        for i in range(4)]
 
-        self.stab_sprite_sheet = Spritesheet("playerstab.png")
-        self.stab_images = self.stab_sprite_sheet.load_strip((0, 0, 50, 50), 4, -1)
+        self.stab_images = STAB_SPRITE_SHEET.load_strip((0, 0, 50, 50), 4, -1)
         self.image = self.images[self.direction][self.frame]
         self.rect = self.image.get_rect()
 
         self.is_moving = False
         self.attack = False
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = pos_x
+        self.rect.y = pos_y
+        self.map_pos_x = map_pos_x
+        self.map_pos_y = map_pos_y
         self.health = 10
 
     def change_direction(self, direction):
@@ -47,3 +50,4 @@ class Player(pg.sprite.Sprite):
             self.image = self.images[self.direction][0]
         else:
             self.image = self.stab_images[self.direction]
+            

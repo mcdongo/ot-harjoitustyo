@@ -8,21 +8,21 @@ from clock import Clock
 from gui import Gui
 
 LEVEL_MAP_1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+               [1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                [1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1],
-               [1, 1, 1, 1, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1],
+               [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
                [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 4, 0, 1],
                [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 3, 1],
+               [1, 0, 0, 0, 0, 0, 0, 1, 0, 4, 1, 0, 0, 3, 1],
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
 CELL_SIZE = 50
 
 LEVEL_MAP_2 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1],
                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
+               [1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 3, 1],
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
 
@@ -31,7 +31,6 @@ class Main():
         self.display = pg.display.set_mode((640, 360))
         pg.display.set_caption("Crawler")
         pg.init()
-        
         self.gui = Gui((640, 360))
 
         self.load_level(LEVEL_MAP)
@@ -63,22 +62,6 @@ class Main():
                                self.event_queue, self.clock, CELL_SIZE, self.gui)
             self.run()
 
-
-'''def main(LEVEL_MAP):
-    display = pg.display.set_mode((640, 360))
-
-    pg.display.set_caption("Crawler")
-    level = Level(LEVEL_MAP, CELL_SIZE)
-    event_queue = EventQueue()
-    renderer = Renderer(display, level)
-    clock = Clock()
-    game_loop = GameLoop(level, renderer, event_queue, clock, CELL_SIZE)
-
-    pg.init()
-    next_level = game_loop.start()
-
-    if next_level:
-        main(LEVEL_MAP_2)'''
 
 
 if __name__ == "__main__":

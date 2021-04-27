@@ -7,7 +7,7 @@ class Spritesheet():
     def __init__(self, filename):
         try:
             self.sheet = pg.image.load(os.path.join(DIRNAME, "assets", filename))
-        except pg.error as message:
+        except Exception as message:
             print("Unable to load spritesheet image: {0}".format(filename))
             raise SystemExit(message)
 

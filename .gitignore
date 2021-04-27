@@ -13,3 +13,5 @@
 /laskarit/viikko2/unicafe/src/tests/__pycache__/
 .coverage
 arkkitehtuurikoodi.txt
+/.vscode
+/src/workspace.code-workspace
