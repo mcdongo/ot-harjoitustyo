@@ -37,25 +37,25 @@ class GameLoop:
                 if not self._level.player.is_moving:
                     if event.key == pg.K_LEFT:
                         if not self.shift:
-                            self._level.start_player_movement(direction_x=-self._cell_size)
+                            self._level.start_entity_movement(self._level.player, direction_x=-self._cell_size)
                         else:
                             self.shift_function(direction_x=-self._cell_size)
 
                     if event.key == pg.K_RIGHT:
                         if not self.shift:
-                            self._level.start_player_movement(direction_x=self._cell_size)
+                            self._level.start_entity_movement(self._level.player, direction_x=self._cell_size)
                         else:
                             self.shift_function(direction_x=self._cell_size)
 
                     if event.key == pg.K_UP:
                         if not self.shift:
-                            self._level.start_player_movement(direction_y=-self._cell_size)
+                            self._level.start_entity_movement(self._level.player, direction_y=-self._cell_size)
                         else:
                             self.shift_function(direction_y=-self._cell_size)
 
                     if event.key == pg.K_DOWN:
                         if not self.shift:
-                            self._level.start_player_movement(direction_y=self._cell_size)
+                            self._level.start_entity_movement(self._level.player, direction_y=self._cell_size)
                         else:
                             self.shift_function(direction_y=self._cell_size)
 

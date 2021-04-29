@@ -55,21 +55,22 @@ class Level:
         )
 
         self.refresh_enemy_queue()
+        self.setup_camera()
 
-        if self.player.rect.x < 300 or self.player.rect.x > 400:
-            while (self.player.rect.x < 300 or self.player.rect.x > 400):
-                print(self.player.rect.x)
-                if self.player.rect.x < 300:
-                    self.scroll_camera(direction_x=-50, direction_y=0, player=True)
-                else:
-                    self.scroll_camera(direction_x=50, direction_y=0, player=True)
+    def setup_camera(self):
+        while (self.player.rect.x < 300 or self.player.rect.x > 400):
+            print(self.player.rect.x)
+            if self.player.rect.x < 300:
+                self.scroll_camera(direction_x=-50, direction_y=0, player=True)
+            else:
+                self.scroll_camera(direction_x=50, direction_y=0, player=True)
       
-        if self.player.rect.y <= 150 or self.player.rect.y >= 250:
-            while (self.player.rect.y < 150 or self.player.rect.y > 250):
-                if self.player.rect.y < 150:
-                    self.scroll_camera(direction_x=0, direction_y=50, player=True)
-                else:
-                    self.scroll_camera(direction_x=0, direction_y=-50, player=True)
+    
+        while (self.player.rect.y < 150 or self.player.rect.y > 250):
+            if self.player.rect.y < 150:
+                self.scroll_camera(direction_x=0, direction_y=50, player=True)
+            else:
+                self.scroll_camera(direction_x=0, direction_y=-50, player=True)
 
     def refresh_enemy_queue(self):
         for enemy in self.enemies:
@@ -91,19 +92,20 @@ class Level:
         if self.player.attack:
             self.player.update(current_time)
 
-    def start_player_movement(self, direction_x=0, direction_y=0):
-        self.player.is_moving = True
-        self.player.move_limit = direction_x + direction_y
-        self.player.moved = 0
-        self.player.direction_x = direction_x
-        self.player.direction_y = direction_y
-        if not self._entity_can_move(self.player, direction_x, direction_y):
-            self.end_animation(self.player)
+    def start_entity_movement(self, entity, direction_x=0, direction_y=0):
+        entity.is_moving = True
+        entity.move_limit = direction_x + direction_y
+        entity.moved = 0
+        entity.direction_x = direction_x
+        entity.direction_y = direction_y
+        if not self._entity_can_move(entity, direction_x, direction_y):
+            self.end_animation(entity)
             return
 
-        self.refresh_enemy_queue()
+        if isinstance(entity, Player):
+            self.refresh_enemy_queue()
 
-        self.move_entity_on_map(direction_x, direction_y, self.player)
+        self.move_entity_on_map(direction_x, direction_y, entity)
 
     def move_entity_on_map(self, direction_x, direction_y, entity):
         cur_pos = (entity.map_pos_y, entity.map_pos_x)
