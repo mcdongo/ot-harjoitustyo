@@ -11,3 +11,5 @@ class Entity(pg.sprite.Sprite):
         self.map_pos_y = map_pos_y
         self.health = 0
         self.moved = 0
+        self.direction_x = 0
+        self.direction_y = 0

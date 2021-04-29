@@ -17,6 +17,7 @@ class Player(Entity):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
+        self.health = 5
 
     def change_direction(self, direction):
         self.direction = direction

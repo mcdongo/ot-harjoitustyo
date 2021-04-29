@@ -59,7 +59,6 @@ class Level:
 
     def setup_camera(self):
         while (self.player.rect.x < 300 or self.player.rect.x > 400):
-            print(self.player.rect.x)
             if self.player.rect.x < 300:
                 self.scroll_camera(direction_x=-50, direction_y=0, player=True)
             else:
@@ -79,9 +78,14 @@ class Level:
     def update(self, current_time):
         for enemy in self.enemies:
             if enemy.should_move(current_time):
-                self._move_enemy(enemy)
+                self.start_entity_movement(enemy)
                 enemy.previous_move_time = current_time
-            enemy.update()
+            if enemy.is_moving:
+                if abs(enemy.moved) == abs(enemy.move_limit):
+                    self.end_animation(enemy)
+                else:
+                    self._move_enemy(enemy)
+            enemy.update(current_time)
 
         if self.player.is_moving:
             if abs(self.player.moved) == abs(self.player.move_limit):
@@ -94,22 +98,27 @@ class Level:
 
     def start_entity_movement(self, entity, direction_x=0, direction_y=0):
         entity.is_moving = True
-        entity.move_limit = direction_x + direction_y
+        if isinstance(entity, Player):
+            entity.move_limit = direction_x + direction_y
+            entity.direction_x = direction_x
+            entity.direction_y = direction_y
         entity.moved = 0
-        entity.direction_x = direction_x
-        entity.direction_y = direction_y
-        if not self._entity_can_move(entity, direction_x, direction_y):
+
+        if isinstance(entity, Enemy):
+            entity.next_move()
+            entity.move_limit = entity.direction_x + entity.direction_y
+        if not self._entity_can_move(entity, entity.direction_x, entity.direction_y):
             self.end_animation(entity)
             return
 
         if isinstance(entity, Player):
             self.refresh_enemy_queue()
-
-        self.move_entity_on_map(direction_x, direction_y, entity)
+            self.move_entity_on_map(direction_x, direction_y, entity)
+        else:
+            self.move_entity_on_map(entity.direction_x, entity.direction_y, entity)
 
     def move_entity_on_map(self, direction_x, direction_y, entity):
         cur_pos = (entity.map_pos_y, entity.map_pos_x)
-        print(cur_pos)
         next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
         self.level_map[cur_pos[0]][cur_pos[1]] = 0
         self.level_map[next_pos[0]][next_pos[1]] = entity
@@ -118,7 +127,12 @@ class Level:
 
     def end_animation(self, entity):
         entity.is_moving = False
-        entity.image = entity.images[entity.direction][0]
+        entity.direction_x = 0
+        entity.direction_y = 0
+        if isinstance(entity, Player):
+            entity.image = entity.images[entity.direction][0]
+        else:
+            entity.image = entity.images[0]
 
     def move_player(self, direction_x=0, direction_y=0):
         if direction_x > 0:
@@ -170,36 +184,8 @@ class Level:
         return can_move
 
     def _move_enemy(self, enemy):
-        direction_x, direction_y = 0, 0
-        cur_pos_x = enemy.map_pos_x
-        cur_pos_y = enemy.map_pos_y
-
-        if enemy.move_queue != []:
-            next_move = enemy.move_queue.pop(0)
-            if cur_pos_y > next_move[0]:
-                direction_y = -50
-            if cur_pos_y < next_move[0]:
-                direction_y = 50
-            if cur_pos_x > next_move[1]:
-                direction_x = -50
-            if cur_pos_x < next_move[1]:
-                direction_x = 50
-
-        else:
-            direction = randint(0, 3)
-            if direction == 0:
-                direction_y = -50
-            if direction == 1:
-                direction_x = 50
-            if direction == 2:
-                direction_y = 50
-            if direction == 3:
-                direction_x = -50
-
-        if not self._entity_can_move(enemy, direction_x, direction_y):
-            return
-        self.move_entity_on_map(direction_x, direction_y, enemy)
-        enemy.rect.move_ip(direction_x, direction_y)
+        enemy.moved += enemy.direction_x/25 + enemy.direction_y/25
+        enemy.rect.move_ip(enemy.direction_x/25, enemy.direction_y/25)
 
     def scroll_camera(self, direction_x, direction_y, player=False):
         self.offset_x -= direction_x
