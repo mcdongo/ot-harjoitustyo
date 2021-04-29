@@ -13,3 +13,9 @@ class Entity(pg.sprite.Sprite):
         self.moved = 0
         self.direction_x = 0
         self.direction_y = 0
+
+    def walking_animation(self):
+        if self.frame == 3:
+            self.frame = 0
+        else:
+            self.frame += 1

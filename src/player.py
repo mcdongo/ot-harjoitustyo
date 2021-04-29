@@ -29,14 +29,15 @@ class Player(Entity):
                 self.attack_animation()
             else:
                 self.walking_animation()
+                self.image = self.images[self.direction][self.frame]
             self.last_updated = current_time
 
-    def walking_animation(self):
+    '''def walking_animation(self):
         if self.frame == 3:
             self.frame = 0
         else:
             self.frame += 1
-        self.image = self.images[self.direction][self.frame]
+        self.image = self.images[self.direction][self.frame]'''
 
     def attack_animation(self):
         if self.image in self.stab_images:

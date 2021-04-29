@@ -63,8 +63,7 @@ class Level:
                 self.scroll_camera(direction_x=-50, direction_y=0, player=True)
             else:
                 self.scroll_camera(direction_x=50, direction_y=0, player=True)
-      
-    
+
         while (self.player.rect.y < 150 or self.player.rect.y > 250):
             if self.player.rect.y < 150:
                 self.scroll_camera(direction_x=0, direction_y=50, player=True)
@@ -150,8 +149,6 @@ class Level:
         self.player.moved += direction_x + direction_y
 
         scroll_camera = False
-
-        #print(self.player.moved, self.player.move_limit)
 
         if self.player.rect.right >= 350:
             scroll_camera = True

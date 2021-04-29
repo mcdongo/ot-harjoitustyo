@@ -65,6 +65,7 @@ class Enemy(Entity):
         if current_time - self.last_updated >= 120:
             if self.is_moving:
                 self.walking_animation()
+                self.image = self.images[self.frame]
                 self.last_updated = current_time
 
         if self.damaged:
@@ -74,12 +75,12 @@ class Enemy(Entity):
                 self.image.fill([50, 50, 50])
                 self.damaged = False
 
-    def walking_animation(self):
+    '''def walking_animation(self):
         if self.frame == 3:
             self.frame = 0
         else:
             self.frame += 1
-        self.image = self.images[self.frame]
+        self.image = self.images[self.frame]'''
 
     def bfs(self, level_map, player):
         visited = [[False]*len(level_map[0]) for i in range(len(level_map))]
