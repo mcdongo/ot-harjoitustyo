@@ -34,7 +34,10 @@ class GameLoop:
 
                 if event.key == pg.K_LSHIFT:
                     self.shift = True
-                if not self._level.player.is_moving:
+                if event.key == pg.K_LCTRL:
+                    self._level.player.apply_shield()
+
+                if not self._level.player.is_moving and not self._level.player.shielded:
                     if event.key == pg.K_LEFT:
                         if not self.shift:
                             self._level.start_entity_movement(self._level.player, direction_x=-self._cell_size)
@@ -63,7 +66,8 @@ class GameLoop:
                         self._level.refresh_enemy_queue()
 
                     if event.key == pg.K_SPACE:
-                        self._level.attack(self._level.player)
+                        if not self._level.player.shielded:
+                            self._level.attack(self._level.player)
                 if event.key == pg.K_ESCAPE:
                     return False
 
@@ -80,6 +84,8 @@ class GameLoop:
             if event.type == pg.KEYUP:
                 if event.key == pg.K_LSHIFT:
                     self.shift = False
+                if event.key == pg.K_LCTRL:
+                    self._level.player.apply_shield()
 
     def _render(self):
         self._renderer.render()

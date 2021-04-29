@@ -12,6 +12,8 @@
 |24.4   |3  |Lyömisanimaatio pelaajalle, lisää grafiikkaa, lyömistoiminto toimii, mahdollisuus gui:n tekemiseen tehty|
 |25.4   |1  |Lisäsin mahdollisuuden kääntää pelaajan suuntaa ilman, että pelaaja itse liikkuu (vasen shift+nuolinäppäin)|
 |27.4   |4  |Loin leveyshakua höydyntäen tekoälyn viholliselle|
+|28.4   |2  |Tein metodeista enemmän yleiskäyttöisiä -> voi lisätä helpommin uusia entiteettejä|
+|29.4   |5  |Lisäsin ensimmäiselle vihollistyypille animaatiot, pelaajalle mahdollisuuden nostaa kilpi|
 
 Yhteensä: 25h
 

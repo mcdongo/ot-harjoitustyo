@@ -5,6 +5,7 @@ from wall import Wall
 from floor import Floor
 from stairs import Stairs
 from enemy import Enemy
+from slime import Slime
 
 
 class Level:
