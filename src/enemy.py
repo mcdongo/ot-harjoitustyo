@@ -1,31 +1,25 @@
 import os
+from spritesheet import Spritesheet
+from entity import Entity
 import pygame as pg
 
 DIRNAME = os.path.dirname(__file__)
+SPRITE_SHEET = Spritesheet("slime-spritesheet.png")
 
 
-class Enemy(pg.sprite.Sprite):
+class Enemy(Entity):
     def __init__(self, map_pos_x, map_pos_y, pos_x, pos_y):
-        super().__init__()
+        super().__init__(map_pos_x, map_pos_y)
 
         self.previous_move_time = 0
         self.move_queue = []
 
-        '''self.image = pg.image.load(
-            os.path.join(dirname, "assets", "enemy.png")
-        )'''
+        self.images = SPRITE_SHEET.load_strip((0, 0, 50, 50), 3, -1)
 
-        self.image = pg.Surface([50, 50])
-        self.image.fill([50, 50, 50])
-
-        self.map_pos_x = map_pos_x
-        self.map_pos_y = map_pos_y
-
-        self.is_moving = False
+        self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
-        self.health = 5
         self.damaged = False
         self.time_red = 0
 

@@ -1,30 +1,22 @@
 import pygame as pg
+from entity import Entity
 from spritesheet import Spritesheet
 
 SPRITE_SHEET = Spritesheet("player-spritesheet.png")
 STAB_SPRITE_SHEET = Spritesheet("playerstab.png")
 
-class Player(pg.sprite.Sprite):
+class Player(Entity):
     def __init__(self, map_pos_x, map_pos_y, pos_x=0, pos_y=0):
-        super().__init__()
-        self.direction = 2
-        self.frame = 0
-        self.last_updated = 0
+        super().__init__(map_pos_x, map_pos_y)
         self.images = [SPRITE_SHEET.load_strip((0, i*50, 50, 50), 4, -1)
                        for i in range(4)]
 
+        self.direction = 2
         self.stab_images = STAB_SPRITE_SHEET.load_strip((0, 0, 50, 50), 4, -1)
         self.image = self.images[self.direction][self.frame]
         self.rect = self.image.get_rect()
-
-        self.is_moving = False
-        self.attack = False
         self.rect.x = pos_x
         self.rect.y = pos_y
-        self.map_pos_x = map_pos_x
-        self.map_pos_y = map_pos_y
-        self.health = 10
-        self.moved = 0
 
     def change_direction(self, direction):
         self.direction = direction
