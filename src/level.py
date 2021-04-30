@@ -4,8 +4,8 @@ from player import Player
 from wall import Wall
 from floor import Floor
 from stairs import Stairs
-from enemy import Enemy
 from slime import Slime
+from ranger import Ranger
 
 
 class Level:
@@ -42,7 +42,12 @@ class Level:
                 elif cell == 3:
                     self.stairs = Stairs(normalized_x, normalized_y)
                 elif cell == 4:
-                    enemy = Enemy(pos_x, pos_y, normalized_x, normalized_y)
+                    enemy = Slime(pos_x, pos_y, normalized_x, normalized_y)
+                    self.enemies.add(enemy)
+                    self.floors.add(Floor(normalized_x, normalized_y))
+                    self.level_map[pos_y][pos_x] = enemy
+                elif cell == 5:
+                    enemy = Ranger(pos_x, pos_y, normalized_x, normalized_y)
                     self.enemies.add(enemy)
                     self.floors.add(Floor(normalized_x, normalized_y))
                     self.level_map[pos_y][pos_x] = enemy
@@ -104,9 +109,10 @@ class Level:
             entity.direction_y = direction_y
         entity.moved = 0
 
-        if isinstance(entity, Enemy):
+        if isinstance(entity, (Slime, Ranger)):
             entity.next_move()
             entity.move_limit = entity.direction_x + entity.direction_y
+            entity.change_direction()
         if not self._entity_can_move(entity, entity.direction_x, entity.direction_y):
             self.end_animation(entity)
             return
@@ -129,7 +135,7 @@ class Level:
         entity.is_moving = False
         entity.direction_x = 0
         entity.direction_y = 0
-        if isinstance(entity, Player):
+        if isinstance(entity, (Player, Ranger)):
             entity.image = entity.images[entity.direction][0]
         else:
             entity.image = entity.images[0]

@@ -2,15 +2,19 @@ import os
 from random import randint
 import pygame as pg
 from spritesheet import Spritesheet
-from enemy import Enemy
+from entity import Entity
 
 DIRNAME = os.path.dirname(__file__)
 SPRITE_SHEET = Spritesheet("slime-spritesheet.png")
 
 
-class Slime(Enemy):
+class Slime(Entity):
     def __init__(self, map_pos_x, map_pos_y, pos_x, pos_y):
         super().__init__(map_pos_x, map_pos_y)
+
+        self.previous_move_time = 0
+        self.move_queue = []
+
         self.images = SPRITE_SHEET.load_strip((0, 0, 50, 50), 4, -1)
 
         self.image = self.images[0]
@@ -20,6 +24,11 @@ class Slime(Enemy):
         self.damaged = False
         self.time_red = 0
         self.health = 5
+
+    def should_move(self, current_time):
+        if current_time:
+            return current_time - self.previous_move_time >= 1800
+        return False
 
     def next_move(self):
         if self.move_queue == []:
@@ -46,10 +55,9 @@ class Slime(Enemy):
 
     def hurt(self):
         self.health -= 1
-        self.image = pg.Surface([50, 50])
         self.image.fill([255, 0, 0])
         self.damaged = True
-        self.time_red = 5
+        self.time_red = 10
         if self.health == 0:
             self.kill()
 
@@ -64,5 +72,12 @@ class Slime(Enemy):
             if self.time_red > 0:
                 self.time_red -= 1
             else:
-                self.image = self.images[0]
+                self.image.fill([50, 50, 50])
                 self.damaged = False
+
+    '''def walking_animation(self):
+        if self.frame == 3:
+            self.frame = 0
+        else:
+            self.frame += 1
+        self.image = self.images[self.frame]'''
