@@ -2,6 +2,7 @@ from random import randint
 import pygame as pg
 from spritesheet import Spritesheet
 from entity import Entity
+from arrow import Arrow
 
 SPRITE_SHEET = Spritesheet("ranger-sheet.png")
 
@@ -22,6 +23,7 @@ class Ranger(Entity):
         self.rect.y = pos_y
         self.damaged = False
         self.health = 5
+        self.arrow = None
 
     def should_move(self, current_time):
         if current_time:
@@ -58,4 +60,6 @@ class Ranger(Entity):
                 self.image = self.images[self.direction][self.frame]
             self.last_updated = current_time
 
-    
+    def shoot(self):
+        self.arrow = Arrow(self.rect.y, self.rect.x, self.direction)
+        return self.arrow

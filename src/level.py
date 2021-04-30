@@ -15,6 +15,7 @@ class Level:
         self.walls = pg.sprite.Group()
         self.floors = pg.sprite.Group()
         self.enemies = pg.sprite.Group()
+        self.objects = pg.sprite.Group()
         self.all_sprites = pg.sprite.Group()
         self.level_map = level_map
         self.offset_x = 0
@@ -57,6 +58,7 @@ class Level:
             self.floors,
             self.stairs,
             self.enemies,
+            self.objects,
             self.player
         )
 
@@ -85,12 +87,25 @@ class Level:
             if enemy.should_move(current_time):
                 self.start_entity_movement(enemy)
                 enemy.previous_move_time = current_time
+                if isinstance(enemy, Ranger):
+                    arrow = enemy.shoot()
+                    self.objects.add(arrow)
+                    self.all_sprites.add(arrow)
             if enemy.is_moving:
                 if abs(enemy.moved) == abs(enemy.move_limit):
                     self.end_animation(enemy)
                 else:
                     self._move_enemy(enemy)
             enemy.update(current_time)
+
+        for arrow in self.objects:
+            if pg.sprite.spritecollide(arrow, self.walls, False):
+                arrow.kill()
+            if pg.sprite.collide_rect(self.player, arrow):
+                arrow.kill()
+                self.player.health -= 1
+                print(self.player.health)
+            arrow.update()
 
         if self.player.is_moving:
             if abs(self.player.moved) == abs(self.player.move_limit):
