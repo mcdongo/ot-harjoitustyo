@@ -1,7 +1,19 @@
 import pygame as pg
 
 class Entity(pg.sprite.Sprite):
+    """An entity class. It is inherited by all long-time characters in a level
+
+    Attributes:
+        map_pos_x: x position in the level
+        map_pos_y: y position in the level
+    """
     def __init__(self, map_pos_x, map_pos_y):
+        """A constructor of the class. Creates a new entity.
+
+        Args:
+            map_pos_x: x position in the level
+            map_pos_y: y position in the level
+        """
         super().__init__()
         self.frame = 0
         self.last_updated = 0
@@ -16,12 +28,21 @@ class Entity(pg.sprite.Sprite):
         self.direction_y = 0
 
     def walking_animation(self):
+        """A method which updates which image is showed as this entity.
+        """
         if self.frame == 3:
             self.frame = 0
         else:
             self.frame += 1
 
     def bfs(self, level_map, player):
+        """A method which updates the movement queue for this entity using
+        a breadth-first search.
+
+        Args:
+            level_map: a two dimensional list containing the current info of the level
+            player: the player class which is in use of the current level
+        """
         visited = [[False]*len(level_map[0]) for i in range(len(level_map))]
 
         goal = (player.map_pos_y, player.map_pos_x)
@@ -73,6 +94,8 @@ class Entity(pg.sprite.Sprite):
                 break
 
     def change_direction(self):
+        """A method which checks which way this entity should be facing
+        """
         if self.direction_x < 0:
             self.direction = 3
         if self.direction_x > 0:

@@ -15,7 +15,7 @@
 |28.4   |2  |Tein metodeista enemmän yleiskäyttöisiä -> voi lisätä helpommin uusia entiteettejä|
 |29.4   |5  |Lisäsin ensimmäiselle vihollistyypille animaatiot, pelaajalle mahdollisuuden nostaa kilpi|
 |30.4   |2  |Lisäsin toisen vihollistyypin, joka ampuu jousella nuolia. Tällä hetkellä vihollinen ampuu joka kerta liikkuessaan nuolen|
-|4.5    |2  |Lisäsin vihollisille sekä pelaajalle health barit, pelaaja pystyy suojautumaan nuolilta nostamalla kilven ylös| 
+|4.5    |4  |Lisäsin vihollisille sekä pelaajalle health barit, pelaaja pystyy suojautumaan nuolilta nostamalla kilven ylös, loin noin puolille luokista ja metodeista docstring-dokumentaatiota ja uusia testejä| 
 
-Yhteensä: 37h
+Yhteensä: 39h
 

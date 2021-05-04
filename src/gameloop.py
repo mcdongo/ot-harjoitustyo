@@ -2,7 +2,27 @@ import pygame as pg
 import pygame_gui
 
 class GameLoop:
+    """Class which is in charge of updating the game and handling events
+    
+    Attributes:
+        level: a Level object
+        renderer: a Renderer object
+        event_queue: an EventQueue object
+        clock: a Clock object
+        cell_size: value of how many pixels wide and tall each cell is in the game
+        gui: a gui object
+    """
     def __init__(self, level, renderer, event_queue, clock, cell_size, gui):
+        """Constructs the class.
+
+        Args:
+            level: a Level object
+            renderer: a Renderer object
+            event_queue: an EventQueue object
+            clock: a Clock object
+            cell_size: value of how many pixels wide and tall each cell is in the game
+            gui: a gui object
+        """
         self._level = level
         self._renderer = renderer
         self._event_queue = event_queue
@@ -12,6 +32,9 @@ class GameLoop:
         self.shift = False
 
     def start(self):
+        """The main game loop. Updates everything
+        """
+
         while True:
             if self._handle_events() is False:
                 break
@@ -29,6 +52,9 @@ class GameLoop:
             self._clock.tick(60)
 
     def _handle_events(self):
+        """A method for handling user inputted events eg. button presses
+        """
+
         for event in self._event_queue.get():
             if event.type == pg.KEYDOWN:
 
@@ -89,14 +115,21 @@ class GameLoop:
                     self._level.player.apply_shield()
 
     def _render(self):
+        """A method which renders everything on the screen
+        """
         self._renderer.render()
 
         pg.display.update()
 
     def next_level(self, level):
+        """A function which loads the next level into memory
+        """
         self._level = level
 
     def shift_function(self, direction_x=0, direction_y=0):
+        """This method is used to change the direction the player is facing if the left shift key is pressed
+        alongside with an arrow key
+        """
         if self.shift:
             if direction_y < 0:
                 self._level.player.change_direction(0)

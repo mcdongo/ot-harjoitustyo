@@ -9,7 +9,20 @@ from ranger import Ranger
 
 
 class Level:
+    """A level class. In charge of updating and keeping track of the game flow and logic
+
+    Attributes:
+        level_map: the layout of the level in a two dimensional list [y][x]
+        cell_size: the width and height of each individual cell in level_map
+    """
     def __init__(self, level_map, cell_size):
+        """Constructs a new level
+
+        Args:
+            level_map: the layout of the level in a two dimensional list [y][x]
+            cell_size: the width and height of each individual cell in level_map
+        """
+
         self.next_level = False
         self.cell_size = cell_size
         self.walls = pg.sprite.Group()
@@ -23,6 +36,11 @@ class Level:
         self._initialize_sprites(level_map)
 
     def _initialize_sprites(self, level_map):
+        """A method which initializes the level, creates all objects necessary for the game to run
+
+        Args:
+            level_map: the layout of the level in a two dimensional list [y][x]
+        """
         height = len(level_map)
         width = len(level_map[0])
 
@@ -66,6 +84,9 @@ class Level:
         self.setup_camera()
 
     def setup_camera(self):
+        """A method which makes sure the player in in center of the screen by moving everything else in relation to the player
+        """
+
         while (self.player.rect.x < 300 or self.player.rect.x > 400):
             if self.player.rect.x < 300:
                 self.scroll_camera(direction_x=-50, direction_y=0, player=True)
@@ -79,10 +100,15 @@ class Level:
                 self.scroll_camera(direction_x=0, direction_y=-50, player=True)
 
     def refresh_enemy_queue(self):
+        """Refreshes the movement queue for each enemy in the level
+        """
+
         for enemy in self.enemies:
             enemy.bfs(self.level_map, self.player)
 
     def update(self, current_time):
+        """A method which updates the game logic
+        """
         for enemy in self.enemies:
             if enemy.should_move(current_time):
                 self.start_entity_movement(enemy)
@@ -110,6 +136,8 @@ class Level:
             self.player.update(current_time)
 
     def update_objects(self):
+        """A method which updates all objects in a level (eg. arrows)
+        """
         for arrow in self.objects:
             if pg.sprite.spritecollide(arrow, self.walls, False):
                 arrow.kill()
@@ -122,6 +150,13 @@ class Level:
 
 
     def start_entity_movement(self, entity, direction_x=0, direction_y=0):
+        """This method enables the movement animation of entitites
+
+        Args:
+            entity: An entity object
+            direction_x=0, if positive, animation starts to the right, if negative, to the left
+            direction_y=0, if positive, animation starts to go down, if negative, to go up.
+        """
         entity.is_moving = True
         if isinstance(entity, Player):
             entity.move_limit = direction_x + direction_y
@@ -144,6 +179,13 @@ class Level:
             self.move_entity_on_map(entity.direction_x, entity.direction_y, entity)
 
     def move_entity_on_map(self, direction_x, direction_y, entity):
+        """A method which moves entities in the two dimensional map instead of actually moving them on the screen.
+
+        Args:
+            direction_x: the direction moved on the x-axis
+            direction_y: the direction moved on the y-axis
+            entity: an entity object
+        """
         cur_pos = (entity.map_pos_y, entity.map_pos_x)
         next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
         self.level_map[cur_pos[0]][cur_pos[1]] = 0
@@ -152,6 +194,11 @@ class Level:
         entity.map_pos_x = next_pos[1]
 
     def end_animation(self, entity):
+        """Ends the animation of asked entity
+
+        Args:
+            entity: an entity object
+        """
         entity.is_moving = False
         entity.direction_x = 0
         entity.direction_y = 0
@@ -161,6 +208,12 @@ class Level:
             entity.image = entity.images[0]
 
     def move_player(self, direction_x=0, direction_y=0):
+        """Moves the player on the screen
+
+        Args:
+            direction_x=0: direction and amount to be moved on the x-axis
+            direction_y=0: direction and amount to be moved on the y-axis
+        """
         if direction_x > 0:
             self.player.change_direction(1)
         if direction_x < 0:
@@ -195,6 +248,16 @@ class Level:
             self.next_level = True
 
     def _entity_can_move(self, entity, direction_x=0, direction_y=0):
+        """A function which makes sure it is allowed by the game logic for an entity to move in a wanted spot.
+
+        Args:
+            entity: an entity object
+            direction_x=0: direction and amount to be moved on the x-axis
+            direction_y=0: direction and amount to be moved on the y-axis
+
+        Returns:
+            True if the entity does not collide with other entities or walls
+        """
         entity.rect.move_ip(direction_x, direction_y)
 
         colliding_walls = pg.sprite.spritecollide(entity, self.walls, False)
@@ -208,10 +271,22 @@ class Level:
         return can_move
 
     def _move_enemy(self, enemy):
+        """Moves the enemy on the screen
+        
+        Args:
+            enemy: an entity object
+        """
         enemy.moved += enemy.direction_x/25 + enemy.direction_y/25
         enemy.rect.move_ip(enemy.direction_x/25, enemy.direction_y/25)
 
     def scroll_camera(self, direction_x, direction_y, player=False):
+        """A method which moves everything else in relation to the player creating an illusion the player moving while it stays in the center
+
+        Args:
+            direction_x=0: direction and amount to be moved on the x-axis
+            direction_y=0: direction and amount to be moved on the y-axis
+            player=False: If player is set to True, then player is moved too
+        """
         self.offset_x -= direction_x
         self.offset_y -= direction_y
         for sprite in self.all_sprites:
@@ -222,6 +297,11 @@ class Level:
                 sprite.rect.move_ip(-direction_x, direction_y)
 
     def _check_for_stairs(self):
+        """A function which checks if the player stands on the stairs object
+
+        Returns:
+            True if pygame.spritecollide returns True
+        """
         on_stairs = pg.sprite.collide_rect(self.player, self.stairs)
 
         return on_stairs
@@ -230,6 +310,11 @@ class Level:
         return self.next_level
 
     def attack(self, entity):
+        """A method for entities to use their attack move
+
+        Args:
+            entity: an entity object
+        """
         entity.attack = True
         direction_x, direction_y = 0, 0
         if entity.direction == 0:
