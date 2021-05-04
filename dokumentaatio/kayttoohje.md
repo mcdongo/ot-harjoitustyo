@@ -1,6 +1,6 @@
 <h1>Käyttöohje</h1>
 
-Lataa projektin viimeisimmän releasen lähdekoodi<br>
+Lataa projektin <a href="https://github.com/mcdongo/ot-harjoitustyo/releases/tag/viikko6">viimeisimmän releasen lähdekoodi</a><br>
 
 Ohjelma asennetaan komennolla:
 > poetry install
