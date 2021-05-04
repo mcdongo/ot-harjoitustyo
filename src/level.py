@@ -98,6 +98,18 @@ class Level:
                     self._move_enemy(enemy)
             enemy.update(current_time)
 
+        self.update_objects()
+
+        if self.player.is_moving:
+            if abs(self.player.moved) == abs(self.player.move_limit):
+                self.end_animation(self.player)
+            else:
+                self.player.update(current_time)
+                self.move_player(self.player.direction_x/25, self.player.direction_y/25)
+        if self.player.attack:
+            self.player.update(current_time)
+
+    def update_objects(self):
         for arrow in self.objects:
             if pg.sprite.spritecollide(arrow, self.walls, False):
                 arrow.kill()
@@ -108,14 +120,6 @@ class Level:
                 print(self.player.current_health)
             arrow.update()
 
-        if self.player.is_moving:
-            if abs(self.player.moved) == abs(self.player.move_limit):
-                self.end_animation(self.player)
-            else:
-                self.player.update(current_time)
-                self.move_player(self.player.direction_x/25, self.player.direction_y/25)
-        if self.player.attack:
-            self.player.update(current_time)
 
     def start_entity_movement(self, entity, direction_x=0, direction_y=0):
         entity.is_moving = True
