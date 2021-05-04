@@ -58,7 +58,9 @@ class Main():
         next_level = self.game_loop.start()
 
         if next_level:
+            self.gui = Gui((640, 360))
             self.load_level(LEVEL_MAP_2)
+            self.gui.set_player_health_bar(self.level.player)
             self.load_renderer(self.display, self.level, self.gui)
             self.load_gameloop(self.level, self.renderer,
                                self.event_queue, self.clock, CELL_SIZE, self.gui)

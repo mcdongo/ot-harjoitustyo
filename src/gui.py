@@ -15,10 +15,10 @@ class Gui:
             res: the resolution of the window in a tuple (x,y)
         """
         self.manager = pygame_gui.UIManager(res)
-        self.hello_button = pygame_gui.elements.UIButton(
-            relative_rect=pg.Rect((350, 275), (100, 50)),
-            text='Say Hello',
-            manager=self.manager)
+        #self.hello_button = pygame_gui.elements.UIButton(
+        #    relative_rect=pg.Rect((350, 275), (100, 50)),
+        #    text='Say Hello',
+        #    manager=self.manager)
         self.healthbar_list = []
         self.player_health_bar = None
 
