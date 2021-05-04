@@ -9,7 +9,8 @@ class Entity(pg.sprite.Sprite):
         self.attack = False
         self.map_pos_x = map_pos_x
         self.map_pos_y = map_pos_y
-        self.health = 0
+        self.health_capacity = 10
+        self.current_health = self.health_capacity
         self.moved = 0
         self.direction_x = 0
         self.direction_y = 0

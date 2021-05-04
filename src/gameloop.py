@@ -80,6 +80,7 @@ class GameLoop:
                 return False
 
             self._gui.manager.process_events(event)
+            self._gui.update()
 
             if event.type == pg.KEYUP:
                 if event.key == pg.K_LSHIFT:

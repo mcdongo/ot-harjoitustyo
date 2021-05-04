@@ -103,8 +103,9 @@ class Level:
                 arrow.kill()
             if pg.sprite.collide_rect(self.player, arrow):
                 arrow.kill()
-                self.player.health -= 1
-                print(self.player.health)
+                if not (self.player.shielded and abs(arrow.direction - self.player.direction) == 2):
+                    self.player.current_health -= 1
+                print(self.player.current_health)
             arrow.update()
 
         if self.player.is_moving:

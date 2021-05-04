@@ -14,6 +14,8 @@
 |27.4   |4  |Loin leveyshakua höydyntäen tekoälyn viholliselle|
 |28.4   |2  |Tein metodeista enemmän yleiskäyttöisiä -> voi lisätä helpommin uusia entiteettejä|
 |29.4   |5  |Lisäsin ensimmäiselle vihollistyypille animaatiot, pelaajalle mahdollisuuden nostaa kilpi|
+|30.4   |2  |Lisäsin toisen vihollistyypin, joka ampuu jousella nuolia. Tällä hetkellä vihollinen ampuu joka kerta liikkuessaan nuolen|
+|4.5    |2  |Lisäsin vihollisille sekä pelaajalle health barit, pelaaja pystyy suojautumaan nuolilta nostamalla kilven ylös| 
 
-Yhteensä: 25h
+Yhteensä: 37h
 

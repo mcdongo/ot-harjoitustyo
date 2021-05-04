@@ -19,7 +19,8 @@ class Player(Entity):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
-        self.health = 5
+        self.health_capacity = 10
+        self.current_health = 10
         self.shielded = False
 
     def change_direction(self, direction):

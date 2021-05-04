@@ -9,15 +9,16 @@ class Arrow(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
+        self.direction = direction
         self.direction_x, self.direction_y = 0, 0
         if direction == 0:
-            self.direction_y = -10
+            self.direction_y = -5
         if direction == 1:
-            self.direction_x = 10
+            self.direction_x = 5
         if direction == 2:
-            self.direction_y = 10
+            self.direction_y = 5
         if direction == 3:
-            self.direction_x = -10
+            self.direction_x = -5
 
     def update(self):
         self.rect.move_ip(self.direction_x, self.direction_y)

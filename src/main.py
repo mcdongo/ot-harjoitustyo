@@ -32,8 +32,8 @@ class Main():
         pg.display.set_caption("Crawler")
         pg.init()
         self.gui = Gui((640, 360))
-
         self.load_level(LEVEL_MAP)
+        self.gui.set_player_health_bar(self.level.player)
         self.event_queue = EventQueue()
         self.load_renderer(self.display, self.level, self.gui)
         self.clock = Clock()
@@ -44,6 +44,8 @@ class Main():
 
     def load_level(self, level_map):
         self.level = Level(level_map, CELL_SIZE)
+        for enemy in self.level.enemies:
+            self.gui.set_health_bar(enemy)
 
     def load_renderer(self, display, level, gui):
         self.renderer = Renderer(display, level, gui)

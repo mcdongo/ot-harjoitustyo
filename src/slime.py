@@ -23,7 +23,8 @@ class Slime(Entity):
         self.rect.y = pos_y
         self.damaged = False
         self.time_red = 0
-        self.health = 5
+        self.health_capacity = 5
+        self.current_health = 5
 
     def should_move(self, current_time):
         if current_time:
@@ -54,11 +55,11 @@ class Slime(Entity):
 
 
     def hurt(self):
-        self.health -= 1
+        self.current_health -= 1
         self.image.fill([255, 0, 0])
         self.damaged = True
         self.time_red = 10
-        if self.health == 0:
+        if self.current_health == 0:
             self.kill()
 
     def update(self, current_time):
