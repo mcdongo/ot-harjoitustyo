@@ -6,6 +6,5 @@ Main-luokka luo kaikki tarvittavat oliot pelin toimintaa varten ja hallitsee nii
 <hr>
 <h2>Sekvenssikaavio Spritesheet-luokan toiminnasta</h1>
 <img src="Crawler-Spritesheet.png">
-<h2>
-Sovelluslogiikka:
+<h2>Sovelluslogiikka:</h2>
 Sovellus toimii Pythonin pygame-kirjastolla. Ideana on se, että sovellus on jatkuvassa loopissa, joka päivittää itseään 60 kertaa sekuntissa. Jokaisella päivityskerralla näytölle piirretään oikeassa järjestyksessä haluttavat asiat (perimmäisimpänä aivan musta tausta, sitten lattia, sitten seinät, sitten pelajat, viholliset ym.) päivityksen yhteydessä myös tehdään haluttavat päivitykset pelilogiikan sisällä: saako pelaaja kävellä tiettyyn kohtaan, ottaako jokin asia vahinkoa jostain ym. Päivityksen aikana tarkastetaan myös käyttäjän antamat syötteet, mitkä vaikuttavat pelin kulkuun. 
