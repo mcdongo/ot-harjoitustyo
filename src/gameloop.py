@@ -11,6 +11,7 @@ class GameLoop:
         clock: a Clock object
         cell_size: value of how many pixels wide and tall each cell is in the game
         gui: a gui object
+        shift: boolean value telling if left shift is pressed at the moment
     """
     def __init__(self, level, renderer, event_queue, clock, cell_size, gui):
         """Constructs the class.
@@ -22,6 +23,7 @@ class GameLoop:
             clock: a Clock object
             cell_size: value of how many pixels wide and tall each cell is in the game
             gui: a gui object
+            menu: boolean, True if game is in menu
         """
         self._level = level
         self._renderer = renderer
@@ -30,11 +32,16 @@ class GameLoop:
         self._cell_size = cell_size
         self._gui = gui
         self.shift = False
+        self.menu = True
 
     def start(self):
         """The main game loop. Updates everything
         """
-
+        self.start_menu()
+    
+    def start_game(self):
+        """Actual in game loop function
+        """
         while True:
             if self._handle_events() is False:
                 break
@@ -50,6 +57,29 @@ class GameLoop:
             self._render()
 
             self._clock.tick(60)
+
+    def start_menu(self):
+        """A function for handling events in the primary menu
+        """
+        while True:
+            if self._handle_menu_events() is False:
+                break
+
+            self._render()
+            self._clock.tick(60)
+                
+    def _handle_menu_events(self):
+        for event in self._event_queue.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return False
+                if event.key == pg.K_DOWN:
+                    self._renderer.menu_list(1)
+                if event.key == pg.K_UP:
+                    self._renderer.menu_list(-1)
+                if event.key == pg.K_SPACE:
+                    self.menu = False
+                    self.start_game()
 
     def _handle_events(self):
         """A method for handling user inputted events eg. button presses
@@ -88,13 +118,14 @@ class GameLoop:
                         else:
                             self.shift_function(direction_y=self._cell_size)
 
-                    if event.key == pg.K_r:
-                        self._level.refresh_enemy_queue()
+                    if event.key == pg.K_e:
+                        self._gui.set_inventory_visible()
 
                     if event.key == pg.K_SPACE:
                         if not self._level.player.shielded:
                             self._level.attack(self._level.player)
                 if event.key == pg.K_ESCAPE:
+                    self.menu = True
                     return False
 
             if event.type == pg.USEREVENT:
@@ -117,7 +148,10 @@ class GameLoop:
     def _render(self):
         """A method which renders everything on the screen
         """
-        self._renderer.render()
+        if not self.menu:
+            self._renderer.render()
+        else:
+            self._renderer.render_menu()
 
         pg.display.update()
 

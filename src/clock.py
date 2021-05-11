@@ -3,6 +3,9 @@ import pygame as pg
 
 class Clock:
     """Class for handling time inside the game
+
+    Attributes:
+        _clock: a pygame clock object
     """
     def __init__(self):
         """Class constructor, creates a new clock

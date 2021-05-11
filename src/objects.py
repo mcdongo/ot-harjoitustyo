@@ -9,6 +9,8 @@ class Arrow(pg.sprite.Sprite):
         pos_y: starting y position on the map
         pos_x: starting x position on the map
         direction: the direction the arrow is facing (0-3, going clockwise, 0 being up)
+        image: a pygame surface object (spritesheet image)
+        rect: a pygame rect object
     """
 
     def __init__(self, pos_y, pos_x, direction):

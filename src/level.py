@@ -14,6 +14,15 @@ class Level:
     Attributes:
         level_map: the layout of the level in a two dimensional list [y][x]
         cell_size: the width and height of each individual cell in level_map
+        next_level: boolean value which is True when the game should update the level it is on
+        walls: a pygame sprite group object
+        floors: a pygame sprite group object
+        enemies: a pygame sprite group object
+        objects: a pygame sprite group object
+        all_sprites: a pygame sprite group object which contains all of the sprites
+        offset_x: integer value keeping track how much the camera has moved on the x-axis
+        offset_y: integer value keeping track how much the camera has moved on the y-axis
+
     """
     def __init__(self, level_map, cell_size):
         """Constructs a new level

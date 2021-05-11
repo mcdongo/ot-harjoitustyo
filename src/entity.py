@@ -6,6 +6,14 @@ class Entity(pg.sprite.Sprite):
     Attributes:
         map_pos_x: x position in the level
         map_pos_y: y position in the level
+        frame: animation related. Declares which frame of a certain animation is shown (usually 0-3)
+        is_moving: a boolean value True if the entity is moving, False otherwise
+        attack: a boolean value telling if the entity is attacking at the moment
+        health_capacity: Integer; the maximum health of said entity
+        current_health: Integer; current health of said entity
+        moved: animation related; keeps track of how much said entity has moved during an animation
+        direction_x: Integer; current speed on the x-axis
+        direction_y Integer; current speed on the y-axis
     """
     def __init__(self, map_pos_x, map_pos_y):
         """A constructor of the class. Creates a new entity.
@@ -41,7 +49,7 @@ class Entity(pg.sprite.Sprite):
 
         Args:
             level_map: a two dimensional list containing the current info of the level
-            player: the player class which is in use of the current level
+            player: the player object which is in use of the current level
         """
         visited = [[False]*len(level_map[0]) for i in range(len(level_map))]
 

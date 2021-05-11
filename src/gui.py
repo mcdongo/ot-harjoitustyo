@@ -7,6 +7,8 @@ class Gui:
 
     Attributes:
         res: the resolution of the window in a tuple (x,y)
+        healthbar_list: a list containing pygame_gui healthbar objects for all enemies in a level
+        player_health_bar: a pygame_gui healthbar object for the player
     """
     def __init__(self, res=(640, 360)):
         """The class constructor
@@ -19,6 +21,22 @@ class Gui:
         #    relative_rect=pg.Rect((350, 275), (100, 50)),
         #    text='Say Hello',
         #    manager=self.manager)
+        self.panel = pygame_gui.elements.ui_panel.UIPanel(
+            relative_rect=pg.Rect((10, 60), (100, 100)),
+            manager=self.manager,
+            starting_layer_height=10,
+            visible=False
+        )
+        self.item_list = pygame_gui.elements.ui_selection_list.UISelectionList(
+            relative_rect=pg.Rect((10, 60), (100, 100)),
+            manager=self.manager,
+            parent_element=self.panel,
+            item_list=["Sword", "Shield", "Potion"],
+            starting_height=11,
+            visible=False
+        )
+        #self.item_list.disable()
+        self.item_list.get_single_selection()
         self.healthbar_list = []
         self.player_health_bar = None
 
@@ -52,3 +70,11 @@ class Gui:
             sprite_to_monitor=player,
             manager=self.manager
         )
+
+    def set_inventory_visible(self):
+        if self.panel.visible:
+            self.panel.hide()
+            self.item_list.hide()
+        else:
+            self.panel.show()
+            self.item_list.show()

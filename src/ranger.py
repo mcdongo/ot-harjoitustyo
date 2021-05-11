@@ -2,7 +2,7 @@ from random import randint
 import pygame as pg
 from spritesheet import Spritesheet
 from entity import Entity
-from arrow import Arrow
+from objects import Arrow
 
 SPRITE_SHEET = Spritesheet("ranger-sheet.png")
 
