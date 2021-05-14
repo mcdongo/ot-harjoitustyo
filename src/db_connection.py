@@ -1,5 +1,8 @@
 import pickle
 import sqlite3
+import os
+
+DIRNAME = os.path.dirname(__file__)
 sqlite3.register_converter("pickle", pickle.loads)
 
 class Connection:
@@ -15,7 +18,7 @@ class Connection:
         Args:
             db_name: The name of the wanted database
         """
-        self.conn = sqlite3.connect(db_name)
+        self.conn = sqlite3.connect(os.path.join(DIRNAME, db_name))
 
     def pickle_data(self, to_pickle):
         """A function which serializes the inputted data to be updated into a database
