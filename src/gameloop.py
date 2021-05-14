@@ -23,7 +23,6 @@ class GameLoop:
             clock: a Clock object
             cell_size: value of how many pixels wide and tall each cell is in the game
             gui: a gui object
-            menu: boolean, True if game is in menu
         """
         self._level = level
         self._renderer = renderer
@@ -32,15 +31,15 @@ class GameLoop:
         self._cell_size = cell_size
         self._gui = gui
         self.shift = False
-        self.menu = True
+        self.state = None
 
     def start(self):
         """The main game loop. Updates everything
-        """
-        self.start_menu()
-    
-    def start_game(self):
-        """Actual in game loop function
+
+        Returns:
+            1 if menu should be loaded
+            2 if game is paused
+            3 if next level should be loaded
         """
         while True:
             if self._handle_events() is False:
@@ -51,36 +50,17 @@ class GameLoop:
             self._level.update(current_time)
 
             if self._level.get_next_level():
-                return True
+                self.state = 3
+            if self.state:
+                temp = self.state
+                self.state = None
+                return temp
 
             self._gui.manager.update(time_delta)
             self._render()
 
             self._clock.tick(60)
-
-    def start_menu(self):
-        """A function for handling events in the primary menu
-        """
-        while True:
-            if self._handle_menu_events() is False:
-                break
-
-            self._render()
-            self._clock.tick(60)
                 
-    def _handle_menu_events(self):
-        for event in self._event_queue.get():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_ESCAPE:
-                    return False
-                if event.key == pg.K_DOWN:
-                    self._renderer.menu_list(1)
-                if event.key == pg.K_UP:
-                    self._renderer.menu_list(-1)
-                if event.key == pg.K_SPACE:
-                    self.menu = False
-                    self.start_game()
-
     def _handle_events(self):
         """A method for handling user inputted events eg. button presses
         """
@@ -125,8 +105,7 @@ class GameLoop:
                         if not self._level.player.shielded:
                             self._level.attack(self._level.player)
                 if event.key == pg.K_ESCAPE:
-                    self.menu = True
-                    return False
+                    self.state = 1
 
             if event.type == pg.USEREVENT:
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
@@ -134,7 +113,7 @@ class GameLoop:
                         print("hello world")
 
             elif event.type == pg.QUIT:
-                return False
+                self.state = 1
 
             self._gui.manager.process_events(event)
             self._gui.update()
@@ -148,10 +127,7 @@ class GameLoop:
     def _render(self):
         """A method which renders everything on the screen
         """
-        if not self.menu:
-            self._renderer.render()
-        else:
-            self._renderer.render_menu()
+        self._renderer.render()
 
         pg.display.update()
 

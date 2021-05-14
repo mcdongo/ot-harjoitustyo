@@ -40,3 +40,4 @@ class Renderer:
                 self.menu_number = 1
             else:
                 self.menu_number -= 1
+        print(self.menu_number)

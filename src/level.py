@@ -117,6 +117,34 @@ class Level:
 
     def update(self, current_time):
         """A method which updates the game logic
+
+        Args:
+            current_time: Integer; how many ticks have passed since the game was started
+        """
+        self.update_enemies(current_time)
+        self.update_objects()
+        self.update_player(current_time)
+
+    def update_player(self, current_time):
+        """A method which updates the player
+
+        Args:
+            current_time: Integer; how many ticks have passed since the game was started
+        """
+        if self.player.is_moving:
+            if abs(self.player.moved) == abs(self.player.move_limit):
+                self.end_animation(self.player)
+            else:
+                self.player.update(current_time)
+                self.move_player(self.player.direction_x/25, self.player.direction_y/25)
+        if self.player.attack:
+            self.player.update(current_time)
+
+    def update_enemies(self, current_time):
+        """A method which updates all enemies
+
+        Args:
+            current_time: Integer; how many ticks have passed since the game was started
         """
         for enemy in self.enemies:
             if enemy.should_move(current_time):
@@ -133,17 +161,6 @@ class Level:
                     self._move_enemy(enemy)
             enemy.update(current_time)
 
-        self.update_objects()
-
-        if self.player.is_moving:
-            if abs(self.player.moved) == abs(self.player.move_limit):
-                self.end_animation(self.player)
-            else:
-                self.player.update(current_time)
-                self.move_player(self.player.direction_x/25, self.player.direction_y/25)
-        if self.player.attack:
-            self.player.update(current_time)
-
     def update_objects(self):
         """A method which updates all objects in a level (eg. arrows)
         """
@@ -154,7 +171,6 @@ class Level:
                 arrow.kill()
                 if not (self.player.shielded and abs(arrow.direction - self.player.direction) == 2):
                     self.player.current_health -= 1
-                print(self.player.current_health)
             arrow.update()
 
 
@@ -339,7 +355,3 @@ class Level:
         for enemy in pg.sprite.spritecollide(entity, self.enemies, False):
             enemy.hurt()
         entity.rect.move_ip(-direction_x, -direction_y)
-
-    def update_enemy_queue(self):
-        for enemy in self.enemies:
-            enemy.bfs(self.level_map, self.player)

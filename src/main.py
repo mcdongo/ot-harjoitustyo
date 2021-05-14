@@ -6,24 +6,36 @@ from event_queue import EventQueue
 from renderer import Renderer
 from clock import Clock
 from gui import Gui
+from db_connection import Connection
+from menuloop import MenuLoop
 
-LEVEL_MAP_1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 5, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 4, 0, 1],
-               [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 1, 0, 4, 1, 0, 0, 3, 1],
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+LEVEL_MAPS = [
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 5, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 4, 0, 1],
+     [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 1, 0, 4, 1, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 0, 0, 0, 0, 1],
+     [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+     [1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1],
+     [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+     [1, 0, 0, 0, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+     ]
 
 CELL_SIZE = 50
-
-LEVEL_MAP_2 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
 
 class Main():
@@ -32,15 +44,31 @@ class Main():
         pg.display.set_caption("Crawler")
         pg.init()
         self.gui = Gui((640, 360))
-        self.load_level(LEVEL_MAP)
+        self.db_connection = Connection("state.db")
+        self.level_id = 2
+
+        self.load_level_from_db()
+        #self.load_level(LEVEL_MAP)
         self.gui.set_player_health_bar(self.level.player)
         self.event_queue = EventQueue()
         self.load_renderer(self.display, self.level, self.gui)
         self.clock = Clock()
+        self.menu_loop = MenuLoop(self.renderer, self.event_queue, self.clock)
         self.load_gameloop(self.level, self.renderer,
                            self.event_queue, self.clock, CELL_SIZE, self.gui)
 
-        self.run()
+        self.start_menu()
+
+    def load_level_from_db(self):
+        temp = self.db_connection.get_data()
+        if temp:
+            self.level = temp
+        else:
+            self.load_level(LEVEL_MAPS[self.level_id])
+
+    def save_level_to_db(self):
+        self.db_connection.store_data(self.level)
+
 
     def load_level(self, level_map):
         self.level = Level(level_map, CELL_SIZE)
@@ -54,12 +82,19 @@ class Main():
         self.game_loop = GameLoop(
             level, renderer, event_queue, clock, cell_size, gui)
 
-    def run(self):
-        next_level = self.game_loop.start()
+    def start_menu(self):
+        state = self.menu_loop.start()
+        if state != -1:
+            self.run()
 
-        if next_level:
+    def run(self):
+        state = self.game_loop.start()
+        if state == 1:
+            self.start_menu()
+        if state == 3:
+            self.level_id += 1
             self.gui = Gui((640, 360))
-            self.load_level(LEVEL_MAP_2)
+            self.load_level(LEVEL_MAPS[self.level_id])
             self.gui.set_player_health_bar(self.level.player)
             self.load_renderer(self.display, self.level, self.gui)
             self.load_gameloop(self.level, self.renderer,
@@ -69,4 +104,4 @@ class Main():
 
 
 if __name__ == "__main__":
-    GAME = Main(LEVEL_MAP_1)
+    GAME = Main(None)

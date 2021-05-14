@@ -1,6 +1,6 @@
 import pygame as pg
 from spritesheet import Spritesheet
-SPRITE_SHEET = Spritesheet("arrow-sheet.png")
+ARROW_SPRITE_SHEET = Spritesheet("arrow-sheet.png")
 
 class Arrow(pg.sprite.Sprite):
     """Class for arrows to be fired either by the player or by the npcs.
@@ -22,7 +22,7 @@ class Arrow(pg.sprite.Sprite):
             direction: the direction the arrow is facing (0-3, going clockwise, 0 being up)
         """
         super().__init__()
-        self.image = SPRITE_SHEET.image_at((direction*50, 0, 50, 50), -1)
+        self.image = ARROW_SPRITE_SHEET.image_at((direction*50, 0, 50, 50), -1)
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
