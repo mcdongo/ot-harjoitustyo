@@ -1,4 +1,3 @@
-import pygame as pg
 from entity import Entity
 from spritesheet import Spritesheet
 

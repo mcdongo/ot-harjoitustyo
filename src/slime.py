@@ -1,6 +1,5 @@
 import os
 from random import randint
-import pygame as pg
 from spritesheet import Spritesheet
 from entity import Entity
 
@@ -64,10 +63,3 @@ class Slime(Entity):
                 self.walking_animation()
                 self.image = self.images[self.frame]
                 self.last_updated = current_time
-
-    '''def walking_animation(self):
-        if self.frame == 3:
-            self.frame = 0
-        else:
-            self.frame += 1
-        self.image = self.images[self.frame]'''

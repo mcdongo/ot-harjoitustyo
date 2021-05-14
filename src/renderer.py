@@ -34,7 +34,7 @@ class Renderer:
                 self.menu_number = 0
             else:
                 self.menu_number += 1
-        
+
         if val < 0:
             if self.menu_number == 0:
                 self.menu_number = 1

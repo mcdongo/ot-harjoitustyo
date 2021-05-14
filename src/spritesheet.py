@@ -4,7 +4,8 @@ import pygame as pg
 DIRNAME = os.path.dirname(__file__)
 
 class Spritesheet():
-    """Takes full spritesheet images and turns them into pygame.surface objects with wanted width and height
+    """Takes full spritesheet images and turns them into pygame.surface objects with wanted
+    width and height
 
     Attributes:
         sheet: A complete spritesheet image
@@ -23,7 +24,7 @@ class Spritesheet():
 
     def image_at(self, rectangle, colorkey=None):
         """Function which gets a specific sprite out of a spritesheet
-        
+
         Args:
             rectangle: a pygame rectangle object
             colorkey: the color which the user wants to get filtered out
@@ -47,12 +48,12 @@ class Spritesheet():
             colorkey: the color which the user wants to get filtered out
         Returns:
             a list of pygame surface objects
-        """"
+        """
         return [self.image_at(rect, colorkey) for rect in rects]
 
     def load_strip(self, rect, image_count, colorkey=None):
         """A function which gets several sprites which are next to each other
-        
+
         Args:
             rect: a pygame rect object
             image_count: how many images on the x-axis
