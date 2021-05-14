@@ -17,6 +17,7 @@
 |30.4   |2  |Lisäsin toisen vihollistyypin, joka ampuu jousella nuolia. Tällä hetkellä vihollinen ampuu joka kerta liikkuessaan nuolen|
 |4.5    |4  |Lisäsin vihollisille sekä pelaajalle health barit, pelaaja pystyy suojautumaan nuolilta nostamalla kilven ylös, loin noin puolille luokista ja metodeista docstring-dokumentaatiota ja uusia testejä| 
 |7.5    |2  |Loin aloitusmenun sekä aloitin inventory-järjestelmän kehittelemisen|
+|14.5   |7  |Menu toimii täysin, mahdollisuus tallentaa peli ja jatkaa myöhemmin käyttäen sqlite3-tietokantaa|
 
-Yhteensä: 41h
+Yhteensä: 48h
 
