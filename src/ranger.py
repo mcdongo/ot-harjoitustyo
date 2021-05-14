@@ -15,7 +15,6 @@ class Ranger(Entity):
 
         self.images = [SPRITE_SHEET.load_strip((0, i*50, 50, 50), 4, -1) 
                        for i in range(4)]
-        print(len(self.images), len(self.images[0]))
         self.direction = 2
         self.image = self.images[self.direction][self.frame]
         self.rect = self.image.get_rect()
@@ -29,7 +28,7 @@ class Ranger(Entity):
         if current_time:
             return current_time - self.previous_move_time >= 1800
         return False
-    
+
     def next_move(self):
         if self.move_queue == []:
             direction = randint(0, 3)
@@ -41,19 +40,19 @@ class Ranger(Entity):
                 self.direction_y = 50
             if direction == 3:
                 self.direction_x = -50
-        else:
-            next_move = self.move_queue.pop(0)
-            if self.map_pos_y > next_move[0]:
-                self.direction_y = -50
-            if self.map_pos_y < next_move[0]:
-                self.direction_y = 50
-            if self.map_pos_x > next_move[1]:
-                self.direction_x = -50
-            if self.map_pos_x < next_move[1]:
-                self.direction_x = 50
+            return
+
+        next_move = self.move_queue.pop(0)
+        if self.map_pos_y > next_move[0]:
+            self.direction_y = -50
+        if self.map_pos_y < next_move[0]:
+            self.direction_y = 50
+        if self.map_pos_x > next_move[1]:
+            self.direction_x = -50
+        if self.map_pos_x < next_move[1]:
+            self.direction_x = 50
 
     def update(self, current_time):
-        #print(self.frame)
         if current_time - self.last_updated >= 120:
             if self.is_moving:
                 self.walking_animation()
@@ -63,3 +62,8 @@ class Ranger(Entity):
     def shoot(self):
         self.arrow = Arrow(self.rect.y, self.rect.x, self.direction)
         return self.arrow
+
+    def hurt(self):
+        self.current_health -= 1
+        if self.current_health == 0:
+            self.kill()

@@ -12,6 +12,7 @@ class GameLoop:
         cell_size: value of how many pixels wide and tall each cell is in the game
         gui: a gui object
         shift: boolean value telling if left shift is pressed at the moment
+        state: None or Integer, from 1-3 exiting the gameloop if integer
     """
     def __init__(self, level, renderer, event_queue, clock, cell_size, gui):
         """Constructs the class.
@@ -40,6 +41,7 @@ class GameLoop:
             1 if menu should be loaded
             2 if game is paused
             3 if next level should be loaded
+            4 game over
         """
         while True:
             if self._handle_events() is False:
@@ -51,6 +53,8 @@ class GameLoop:
 
             if self._level.get_next_level():
                 self.state = 3
+            if self._level.player.current_health == 0:
+                self.state = 4
             if self.state:
                 temp = self.state
                 self.state = None
@@ -70,7 +74,7 @@ class GameLoop:
 
                 if event.key == pg.K_LSHIFT:
                     self.shift = True
-                if event.key == pg.K_LCTRL:
+                if event.key == pg.K_LCTRL and not self._level.player.is_moving:
                     self._level.player.apply_shield()
 
                 if not self._level.player.is_moving and not self._level.player.shielded:
@@ -121,7 +125,7 @@ class GameLoop:
             if event.type == pg.KEYUP:
                 if event.key == pg.K_LSHIFT:
                     self.shift = False
-                if event.key == pg.K_LCTRL:
+                if event.key == pg.K_LCTRL and not self._level.player.is_moving:
                     self._level.player.apply_shield()
 
     def _render(self):

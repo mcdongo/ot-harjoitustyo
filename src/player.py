@@ -22,6 +22,9 @@ class Player(Entity):
         self.health_capacity = 10
         self.current_health = 10
         self.shielded = False
+        self.inventory = {"Sword":1,
+                          "Shield":1,
+                          "Potion":1}
 
     def change_direction(self, direction):
         self.direction = direction

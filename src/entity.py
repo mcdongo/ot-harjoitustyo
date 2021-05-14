@@ -57,14 +57,20 @@ class Entity(pg.sprite.Sprite):
 
         queue = []
         cur_pos = (self.map_pos_y, self.map_pos_x)
-        #print("{0}, player pos: {1}".format(cur_pos, goal))
         queue.append([cur_pos])
         visited[cur_pos[0]][cur_pos[1]] = True
 
         while queue:
             path = queue.pop(0)
             cur_pos = path[-1]
-            #print(cur_pos)
+
+            """for test_pos in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                if level_map[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]] != 1:
+                    if not visited[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]]:
+                        new_path = list(path)
+                        new_path.append((cur_pos[0]+test_pos[0], cur_pos[1]+test_pos[1]))
+                        queue.append(new_path)
+                        visited[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]] = True"""
 
             if level_map[cur_pos[0]-1][cur_pos[1]] != 1:
                 if not visited[cur_pos[0]-1][cur_pos[1]]:
@@ -95,9 +101,8 @@ class Entity(pg.sprite.Sprite):
                     visited[cur_pos[0]][cur_pos[1]+1] = True
 
             if cur_pos == goal:
-                #print("Shortest:")
-                #print(new_path)
                 new_path.pop(0)
+                new_path.pop()
                 self.move_queue = new_path
                 break
 

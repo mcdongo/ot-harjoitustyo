@@ -1,5 +1,6 @@
 import pickle
 import sqlite3
+sqlite3.register_converter("pickle", pickle.loads)
 
 class Connection:
     """Class for a database connection
@@ -17,26 +18,53 @@ class Connection:
         self.conn = sqlite3.connect(db_name)
 
     def pickle_data(self, to_pickle):
-        pickled = pickle.dumps(to_pickle)
+        """A function which serializes the inputted data to be updated into a database
 
+        Args:
+            to_pickle: data to be serialized
+        Returns:
+            pickled: serialized data
+        """
+        pickled = pickle.dumps(to_pickle)
         return pickled
 
     def unpickle_data(self, to_unpickle):
-        unpickled = pickle.load(to_unpickle)
+        """A function which serializes the inputted data to be used in the app
 
+        Args:
+            to_unpickle: Data meant to be deserialized
+        Returns:
+            unpickled: deserialized data
+        """
+        unpickled = pickle.loads(to_unpickle)
         return unpickled
+    
+    def reset_player_data(self):
+        current_health = self.pickle_data(10)
+        inventory = {"Sword":1,
+                     "Shield":1,
+                     "Potion":1
+        }
+        inventory = self.pickle_data(inventory)
+        level_id = self.pickle_data(0)
+        self.conn.execute("DELETE FROM player_state WHERE id=1")
+        self.conn.execute("INSERT INTO player_state (current_health, inventory, level_id) VALUES (?, ?, ?)", [current_health, inventory, level_id])
+        self.conn.commit()
 
-    def store_data(self, data):
-        data = self.pickle_data(data)
-        try:
-            self.conn.execute("DELETE from cur_level WHERE id=1")
-        except sqlite3.Error:
-            pass
-        self.conn.execute("INSERT INTO cur_level (data) VALUES (?)", [data])
+    def store_player_data(self, player, level_id):
+        current_health = self.pickle_data(player.current_health)
+        inventory = self.pickle_data(player.inventory)
+        level_id = self.pickle_data(level_id)
+        self.conn.execute("UPDATE player_state SET current_health = ?, inventory = ?, level_id = ?", [current_health, inventory, level_id])
+        self.conn.commit()
 
-    def get_data(self):
+    def get_player_data(self):
+        data = self.conn.execute("SELECT current_health, inventory, level_id FROM player_state").fetchone()
+        return self.unpickle_data(data[0]), self.unpickle_data(data[1]), self.unpickle_data(data[2])
+
+    def get_map_data(self):
         try:
-            to_unpickle = self.conn.execute("SELECT data FROM cur_level").fetchone()
+            to_unpickle = self.conn.execute("SELECT data FROM level_list").fetchone()
             if to_unpickle:
                 return self.unpickle_data(to_unpickle[0])
             return None

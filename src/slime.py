@@ -21,7 +21,6 @@ class Slime(Entity):
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
-        self.damaged = False
         self.time_red = 0
         self.health_capacity = 5
         self.current_health = 5
@@ -56,9 +55,6 @@ class Slime(Entity):
 
     def hurt(self):
         self.current_health -= 1
-        self.image.fill([255, 0, 0])
-        self.damaged = True
-        self.time_red = 10
         if self.current_health == 0:
             self.kill()
 
@@ -68,13 +64,6 @@ class Slime(Entity):
                 self.walking_animation()
                 self.image = self.images[self.frame]
                 self.last_updated = current_time
-
-        if self.damaged:
-            if self.time_red > 0:
-                self.time_red -= 1
-            else:
-                self.image.fill([50, 50, 50])
-                self.damaged = False
 
     '''def walking_animation(self):
         if self.frame == 3:

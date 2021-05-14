@@ -139,6 +139,7 @@ class Level:
                 self.move_player(self.player.direction_x/25, self.player.direction_y/25)
         if self.player.attack:
             self.player.update(current_time)
+            
 
     def update_enemies(self, current_time):
         """A method which updates all enemies
