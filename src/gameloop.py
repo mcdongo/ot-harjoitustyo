@@ -107,6 +107,7 @@ class GameLoop:
                         self.mixer.pause_music()
 
                     if event.key == pg.K_e:
+                        self.reconstruct_player_inventory()
                         self._gui.set_inventory_visible()
 
                     if event.key == pg.K_SPACE:
@@ -132,6 +133,12 @@ class GameLoop:
                     self.shift = False
                 if event.key == pg.K_LCTRL and not self._level.player.is_moving:
                     self._level.player.apply_shield()
+
+    def reconstruct_player_inventory(self):
+        temp_inv = []
+        for key, value in self._level.player.inventory.items():
+            temp_inv.append("".join("{0}:{1}".format(key, value)))
+        self._gui.item_list.set_item_list(temp_inv)
 
     def _render(self):
         """A method which renders everything on the screen

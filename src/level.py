@@ -6,6 +6,7 @@ from floor import Floor
 from stairs import Stairs
 from slime import Slime
 from ranger import Ranger
+from objects import Arrow, Item
 
 
 class Level:
@@ -79,13 +80,18 @@ class Level:
                     self.enemies.add(enemy)
                     self.floors.add(Floor(normalized_x, normalized_y))
                     self.level_map[pos_y][pos_x] = enemy
+                elif cell == 6:
+                    item = Item(pos_x, pos_y, normalized_x, normalized_y)
+                    self.floors.add(Floor(normalized_x, normalized_y))
+                    self.objects.add(item)
+                    self.level_map[pos_y][pos_x] = item
 
         self.all_sprites.add(
             self.walls,
             self.floors,
             self.stairs,
-            self.enemies,
             self.objects,
+            self.enemies,
             self.player
         )
 
@@ -165,14 +171,24 @@ class Level:
     def update_objects(self):
         """A method which updates all objects in a level (eg. arrows)
         """
-        for arrow in self.objects:
-            if pg.sprite.spritecollide(arrow, self.walls, False):
-                arrow.kill()
-            if pg.sprite.collide_rect(self.player, arrow):
-                arrow.kill()
-                if not (self.player.shielded and abs(arrow.direction - self.player.direction) == 2):
-                    self.player.hurt()
-            arrow.update()
+        for objects in self.objects:
+            if isinstance(objects, Arrow):
+                if pg.sprite.spritecollide(objects, self.walls, False):
+                    objects.kill()
+                if pg.sprite.collide_rect(self.player, objects):
+                    objects.kill()
+                    if not (self.player.shielded and abs(objects.direction - self.player.direction) == 2):
+                        self.player.hurt()
+                objects.update()
+
+            if isinstance(objects, Item):
+                if pg.sprite.collide_rect(objects, self.player):
+                    if "Potion" not in self.player.inventory:
+                        self.player.inventory["Potion"] = 0
+                    self.player.inventory["Potion"] += 1
+                    objects.kill()
+                    print(self.player.inventory)
+
 
 
     def start_entity_movement(self, entity, direction_x=0, direction_y=0):

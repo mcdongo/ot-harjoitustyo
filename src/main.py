@@ -9,6 +9,32 @@ from db_connection import Connection
 from menuloop import MenuLoop
 from mixer import Mixer
 
+LEVEL_MAPS = [
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 5, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 4, 0, 1],
+     [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 1, 0, 4, 1, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 0, 0, 0, 0, 1],
+     [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+     [1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1],
+     [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
+     [1, 0, 0, 0, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+     ]
+
 CELL_SIZE = 50
 DB_CONNECTION = Connection("state.db")
 
@@ -17,7 +43,7 @@ class Main:
         self.display = pg.display.set_mode((640, 360))
         pg.display.set_caption("Crawler")
         pg.init()
-        self.level_list = None
+        self.level_list = LEVEL_MAPS #None
         self.gui = Gui((640, 360))
         self.level_id = 0
         self.level = None
@@ -33,7 +59,7 @@ class Main:
         self.start_menu()
 
     def load_level_list(self):
-        self.level_list = DB_CONNECTION.get_map_data()
+        self.level_list = LEVEL_MAPS #DB_CONNECTION.get_map_data()
 
     def build_essentials(self):
         self.load_level_list()
