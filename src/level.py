@@ -171,7 +171,7 @@ class Level:
             if pg.sprite.collide_rect(self.player, arrow):
                 arrow.kill()
                 if not (self.player.shielded and abs(arrow.direction - self.player.direction) == 2):
-                    self.player.current_health -= 1
+                    self.player.hurt()
             arrow.update()
 
 
@@ -220,6 +220,9 @@ class Level:
         cur_pos = (entity.map_pos_y, entity.map_pos_x)
         next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
         cell = self.level_map[next_pos[0]][next_pos[1]]
+        if isinstance(entity, Slime) and isinstance(cell, Player):
+            if not (self.player.shielded and abs(entity.direction - self.player.direction) == 2):
+                self.player.hurt()
         if isinstance(cell, Entity):
             return False
         self.level_map[cur_pos[0]][cur_pos[1]] = 0

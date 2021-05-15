@@ -102,7 +102,7 @@ class Entity(pg.sprite.Sprite):
 
             if cur_pos == goal:
                 new_path.pop(0)
-                new_path.pop()
+                #new_path.pop()
                 self.move_queue = new_path
                 break
 
