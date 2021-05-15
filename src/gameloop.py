@@ -14,7 +14,7 @@ class GameLoop:
         shift: boolean value telling if left shift is pressed at the moment
         state: None or Integer, from 1-3 exiting the gameloop if integer
     """
-    def __init__(self, level, renderer, event_queue, clock, cell_size, gui):
+    def __init__(self, level, renderer, event_queue, clock, cell_size, gui, mixer):
         """Constructs the class.
 
         Args:
@@ -31,6 +31,7 @@ class GameLoop:
         self._clock = clock
         self._cell_size = cell_size
         self._gui = gui
+        self.mixer = mixer
         self.shift = False
         self.state = None
 
@@ -101,6 +102,9 @@ class GameLoop:
                             self._level.start_entity_movement(self._level.player, direction_y=self._cell_size)
                         else:
                             self.shift_function(direction_y=self._cell_size)
+                    
+                    if event.key == pg.K_m:
+                        self.mixer.pause_music()
 
                     if event.key == pg.K_e:
                         self._gui.set_inventory_visible()
@@ -109,6 +113,7 @@ class GameLoop:
                         if not self._level.player.shielded:
                             self._level.attack(self._level.player)
                 if event.key == pg.K_ESCAPE:
+                    self.mixer.stop_music()
                     self.state = 1
 
             if event.type == pg.USEREVENT:

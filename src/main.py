@@ -7,6 +7,7 @@ from clock import Clock
 from gui import Gui
 from db_connection import Connection
 from menuloop import MenuLoop
+from mixer import Mixer
 
 CELL_SIZE = 50
 DB_CONNECTION = Connection("state.db")
@@ -23,6 +24,8 @@ class Main:
         self.event_queue = EventQueue()
         self.clock = Clock()
         self.renderer = Renderer(self.display, self.level, self.gui)
+        self.mixer = Mixer()
+        self.mixer.load_track(0)
         self.game_loop = None
         self.menu_loop = MenuLoop(self.renderer, self.event_queue, self.clock)
 
@@ -38,7 +41,7 @@ class Main:
         self.add_healthbars()
         self.renderer = Renderer(self.display, self.level, self.gui)
         self.game_loop = GameLoop(self.level, self.renderer,
-                                  self.event_queue, self.clock, CELL_SIZE, self.gui)
+                                  self.event_queue, self.clock, CELL_SIZE, self.gui, self.mixer)
 
 
     def load_level(self):
@@ -78,6 +81,7 @@ class Main:
             self.run()
 
     def run(self):
+        self.mixer.play_music(loops=-1)
         state = self.game_loop.start()
         if state == 1:
             self.start_menu()
