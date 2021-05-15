@@ -117,3 +117,15 @@ class Entity(pg.sprite.Sprite):
             self.direction = 0
         if self.direction_y > 0:
             self.direction = 2
+
+    def hurt(self):
+        """A function which decreases entitys hp
+
+        Returns:
+            True if entity's hp has fallen to 0
+            False otherwise
+        """
+        self.current_health -= 1
+        if self.current_health == 0:
+            return True
+        return False

@@ -21,16 +21,16 @@ class Slime(Entity):
         self.rect.x = pos_x
         self.rect.y = pos_y
         self.time_red = 0
-        self.health_capacity = 5
-        self.current_health = 5
+        self.health_capacity = randint(3, 8)
+        self.current_health = self.health_capacity
 
     def should_move(self, current_time):
         if current_time:
-            return current_time - self.previous_move_time >= 1800
+            return current_time - self.previous_move_time >= randint(1200, 1800)
         return False
 
     def next_move(self):
-        if self.move_queue == []:
+        if self.move_queue == [] or len(self.move_queue) > 10:
             direction = randint(0, 3)
             if direction == 0:
                 self.direction_y = -50
@@ -51,11 +51,6 @@ class Slime(Entity):
             if self.map_pos_x < next_move[1]:
                 self.direction_x = 50
 
-
-    def hurt(self):
-        self.current_health -= 1
-        if self.current_health == 0:
-            self.kill()
 
     def update(self, current_time):
         if current_time - self.last_updated >= 120:

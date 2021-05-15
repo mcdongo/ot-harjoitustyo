@@ -62,8 +62,3 @@ class Ranger(Entity):
     def shoot(self):
         self.arrow = Arrow(self.rect.y, self.rect.x, self.direction)
         return self.arrow
-
-    def hurt(self):
-        self.current_health -= 1
-        if self.current_health == 0:
-            self.kill()

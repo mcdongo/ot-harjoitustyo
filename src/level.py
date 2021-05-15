@@ -1,5 +1,5 @@
-from random import randint
 import pygame as pg
+from entity import Entity
 from player import Player
 from wall import Wall
 from floor import Floor
@@ -200,9 +200,11 @@ class Level:
 
         if isinstance(entity, Player):
             self.refresh_enemy_queue()
-            self.move_entity_on_map(direction_x, direction_y, entity)
+            if not self.move_entity_on_map(direction_x, direction_y, entity):
+                self.end_animation(entity)
         else:
-            self.move_entity_on_map(entity.direction_x, entity.direction_y, entity)
+            if not self.move_entity_on_map(entity.direction_x, entity.direction_y, entity):
+                self.end_animation(entity)
 
     def move_entity_on_map(self, direction_x, direction_y, entity):
         """A method which moves entities in the two dimensional map instead of actually moving them on the screen.
@@ -211,13 +213,20 @@ class Level:
             direction_x: the direction moved on the x-axis
             direction_y: the direction moved on the y-axis
             entity: an entity object
+        Returns:
+            True if it's possible to move into that cell
+            False if not
         """
         cur_pos = (entity.map_pos_y, entity.map_pos_x)
         next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
+        cell = self.level_map[next_pos[0]][next_pos[1]]
+        if isinstance(cell, Entity):
+            return False
         self.level_map[cur_pos[0]][cur_pos[1]] = 0
         self.level_map[next_pos[0]][next_pos[1]] = entity
         entity.map_pos_y = next_pos[0]
         entity.map_pos_x = next_pos[1]
+        return True
 
     def end_animation(self, entity):
         """Ends the animation of asked entity
@@ -354,5 +363,7 @@ class Level:
 
         entity.rect.move_ip(direction_x, direction_y)
         for enemy in pg.sprite.spritecollide(entity, self.enemies, False):
-            enemy.hurt()
+            if enemy.hurt():
+                self.level_map[enemy.map_pos_y][enemy.map_pos_x] = 0
+                enemy.kill()
         entity.rect.move_ip(-direction_x, -direction_y)

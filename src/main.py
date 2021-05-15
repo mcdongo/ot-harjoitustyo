@@ -26,6 +26,7 @@ class Main:
         self.renderer = Renderer(self.display, self.level, self.gui)
         self.mixer = Mixer()
         self.mixer.load_track(0)
+        self.mixer.set_volume(0.3)
         self.game_loop = None
         self.menu_loop = MenuLoop(self.renderer, self.event_queue, self.clock)
 
@@ -92,6 +93,7 @@ class Main:
             self.load_player_data()
             self.run()
         if state == 4:
+            DB_CONNECTION.reset_player_data()
             self.__init__()
 
 if __name__ == "__main__":
