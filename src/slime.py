@@ -15,6 +15,7 @@ class Slime(Entity):
         self.move_queue = []
 
         self.images = SPRITE_SHEET.load_strip((0, 0, 50, 50), 4, -1)
+        self.attack_images = SPRITE_SHEET.load_strip((0, 50, 50, 50), 4, -1)
 
         self.image = self.images[0]
         self.rect = self.image.get_rect()
@@ -23,6 +24,7 @@ class Slime(Entity):
         self.time_red = 0
         self.health_capacity = randint(3, 8)
         self.current_health = self.health_capacity
+        self.attack_time = 0
 
     def should_move(self, current_time):
         if current_time:
@@ -58,3 +60,16 @@ class Slime(Entity):
                 self.walking_animation()
                 self.image = self.images[self.frame]
                 self.last_updated = current_time
+
+            if self.attack:
+                if self.attack_time > 0:
+                    self.attack_time -= 1
+                    self.image = self.attack_images[self.direction]
+                else:
+                    self.attack = False
+                    self.attack_time = 0
+                    self.image = self.images[0]
+
+    def start_attack(self):
+        self.attack = True
+        self.attack_time = 5

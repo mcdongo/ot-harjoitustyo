@@ -13,7 +13,7 @@ Peli toteutetaan Pythonilla ja tämän pygame-kirjastolla.<br>
 - [x] Pelaaja voi lyödä vihollista ja suojautua vihollisen hyökkäyksiltä kilvellä
 - [x] Joissain kerroksissa saattaa olla pimeää, joten pelaaja näkee vain lyhyen matkaa 
 - [ ] Pelaajalla on laukku johon voi nostaa esineitä
-- [ ] Pelaajan pelin tilanne tallennetaan tietokantaan (kerros, sijainti kerroksessa, kerroksen tila, pelaajan laukun sisältö ym)
+- [x] Pelaajan pelin tilanne tallennetaan tietokantaan (kerros, sijainti kerroksessa, kerroksen tila, pelaajan laukun sisältö ym)
 
 <h2>Ominaisuuksia, jotka lisätään mikäli aikaa riittää:</h2>
 

@@ -221,8 +221,10 @@ class Level:
         next_pos = (cur_pos[0]+int(direction_y/50), cur_pos[1]+int(direction_x/50))
         cell = self.level_map[next_pos[0]][next_pos[1]]
         if isinstance(entity, Slime) and isinstance(cell, Player):
+            entity.start_attack()
             if not (self.player.shielded and abs(entity.direction - self.player.direction) == 2):
                 self.player.hurt()
+                return False
         if isinstance(cell, Entity):
             return False
         self.level_map[cur_pos[0]][cur_pos[1]] = 0
