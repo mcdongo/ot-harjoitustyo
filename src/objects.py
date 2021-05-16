@@ -46,7 +46,23 @@ class Arrow(pg.sprite.Sprite):
         self.rect.move_ip(self.direction_x, self.direction_y)
 
 class Item(pg.sprite.Sprite):
+    """Class for item objects which can be picked up in the level
+    
+    Atrributes:
+        image: pygame surface object
+        rect: a pygame rect object
+        map_pos_x: spot on the x-axis in the map
+        map_pos_y: spot on the y-axis in the map
+    """
     def __init__(self, map_pos_x, map_pos_y, pos_x, pos_y):
+        """A class constructor. Loads wanted image into memory
+        
+        Args:
+            map_pos_x: spot on x-axis in the map
+            map_pos_y: spot on y-axis in the map
+            pos_x: spot on the screen on the x-axis
+            pos_y: spot on the screen on the y-axis
+        """
         super().__init__()
         self.image = pg.image.load(os.path.join(DIRNAME, "assets", "health_potion.png"))
         self.rect = self.image.get_rect()

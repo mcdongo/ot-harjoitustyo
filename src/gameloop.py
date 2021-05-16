@@ -110,6 +110,9 @@ class GameLoop:
                         self.reconstruct_player_inventory()
                         self._gui.set_inventory_visible()
 
+                    if event.key == pg.K_z:
+                        self._level.player.consume_potion()
+
                     if event.key == pg.K_SPACE:
                         if not self._level.player.shielded:
                             self._level.attack(self._level.player)
@@ -135,6 +138,8 @@ class GameLoop:
                     self._level.player.apply_shield()
 
     def reconstruct_player_inventory(self):
+        """A method which updates gui with player's current inventory
+        """
         temp_inv = []
         for key, value in self._level.player.inventory.items():
             temp_inv.append("".join("{0}:{1}".format(key, value)))

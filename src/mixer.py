@@ -4,7 +4,19 @@ import pygame
 DIRNAME = os.path.dirname(__file__)
 
 class Mixer:
+    """A class for playing sounds and music
+
+    Attributes:
+        track_list: a list of track names
+        paused: boolean value if music is currently playing or not
+    """
     def __init__(self):
+        """A class constructor
+
+        Attributes:
+            track_list: a list of track names
+            paused: boolean value if music is currently playing or not
+        """
         pygame.mixer.pre_init()
         pygame.mixer.init()
         self.track_list = {0:"bgm1.wav"}
@@ -26,6 +38,8 @@ class Mixer:
         pygame.mixer.music.stop()
 
     def pause_music(self):
+        """Pauses or unpauses music if called
+        """
         if not self.paused:
             pygame.mixer.music.pause()
             self.paused = True

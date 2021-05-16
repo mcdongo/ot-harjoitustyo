@@ -68,6 +68,8 @@ class Gui:
         )
 
     def set_inventory_visible(self):
+        """A method which enables the inventory panel
+        """
         if self.panel.visible:
             self.panel.hide()
             self.item_list.hide()

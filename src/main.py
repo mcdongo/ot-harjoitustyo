@@ -39,7 +39,21 @@ CELL_SIZE = 50
 DB_CONNECTION = Connection("state.db")
 
 class Main:
+    """The main game class, in charge of loading levels and handling
+    features which are outside the game loop
+
+    Attributes:
+        display: a pygame display object
+        level_list: list of levels
+        level_id: id of the current level
+        level: Level object
+        event_queue: EventQueue object
+        clock: a pygame clock object
+        mixer: a mixer object
+    """
     def __init__(self):
+        """Class constructor. Loads everything into memory
+        """
         self.display = pg.display.set_mode((640, 360))
         pg.display.set_caption("Crawler")
         pg.init()
@@ -59,9 +73,13 @@ class Main:
         self.start_menu()
 
     def load_level_list(self):
+        """Resets the level list from database
+        """
         self.level_list = LEVEL_MAPS #DB_CONNECTION.get_map_data()
 
     def build_essentials(self):
+        """A method which resets important objects for loading a different level
+        """
         self.load_level_list()
         self.load_level()
         self.gui = Gui((640, 360))
@@ -72,19 +90,27 @@ class Main:
 
 
     def load_level(self):
+        """Loads a different level into memory
+        """
         self.level = Level(self.level_list[self.level_id], CELL_SIZE)
 
     def add_healthbars(self):
+        """A method which adds health bars for all entities in a level
+        """
         for enemy in self.level.enemies:
             self.gui.set_health_bar(enemy)
         self.gui.set_player_health_bar(self.level.player)
 
     def load_level_id(self):
+        """A method which fetches the level id of a saved game from a database
+        """
         data = DB_CONNECTION.get_player_data()
         if data:
             self.level_id = data[2]
 
     def load_player_data(self):
+        """Loads a save game from a database
+        """
         data = DB_CONNECTION.get_player_data()
         if data:
             self.level.player.current_health = data[0]
@@ -92,9 +118,13 @@ class Main:
         self.gui.set_player_health_bar(self.level.player)
 
     def store_player_data(self):
+        """A method which stores player data into a database
+        """
         DB_CONNECTION.store_player_data(self.level.player, self.level_id)
 
     def start_menu(self):
+        """Method which starts a menu loop and is the backbone of the game
+        """
         state = self.menu_loop.start()
         if state != -1:
             if state == 0:
@@ -108,6 +138,8 @@ class Main:
             self.run()
 
     def run(self):
+        """Method which starts the main game loop
+        """
         self.mixer.play_music(loops=-1)
         state = self.game_loop.start()
         if state == 1:

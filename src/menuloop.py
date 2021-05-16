@@ -51,6 +51,8 @@ class MenuLoop:
                 return -1
 
     def _render(self):
+        """A method which renders the menu on the screen
+        """
         self._renderer.render_menu()
         pg.display.update()
 

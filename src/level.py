@@ -187,7 +187,6 @@ class Level:
                         self.player.inventory["Potion"] = 0
                     self.player.inventory["Potion"] += 1
                     objects.kill()
-                    print(self.player.inventory)
 
 
 

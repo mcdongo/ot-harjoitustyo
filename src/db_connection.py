@@ -89,6 +89,11 @@ class Connection:
                 self.unpickle_data(data[1]), self.unpickle_data(data[2]))
 
     def get_map_data(self):
+        """Function which fetches maps from database
+
+        Returns:
+            unserialized map list
+        """
         try:
             to_unpickle = self.conn.execute("SELECT data FROM level_list").fetchone()
             if to_unpickle:
