@@ -26,5 +26,3 @@ Ja testikattavuuden saa suorittamalla komennon: <br>
 
 Pylintillä voi testata koodin siisteyttä seuraavalla komennolla: <br>
 > poetry run invoke lint
-
-<a href="https://github.com/mcdongo/ot-harjoitustyo/releases/tag/viikko5">Linkki viikon 5 releaseen</a>
