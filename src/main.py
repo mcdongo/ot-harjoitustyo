@@ -27,11 +27,21 @@ LEVEL_MAPS = [
      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
 
     [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-     [1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 0, 0, 0, 0, 1],
+     [1, 2, 0, 0, 0, 0, 1, 5, 0, 0, 1, 6, 0, 0, 0, 1],
      [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
      [1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 1],
      [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1],
      [1, 0, 0, 0, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 3, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+    [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 2, 0, 0, 1, 0, 5, 0, 0, 0, 0, 4, 0, 1, 3, 1],
+     [1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1],
+     [1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1],
+     [1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+     [1, 0, 0, 0, 1, 4, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+     [1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+     [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
      ]
 
@@ -57,7 +67,7 @@ class Main:
         self.display = pg.display.set_mode((640, 360))
         pg.display.set_caption("Crawler")
         pg.init()
-        self.level_list = LEVEL_MAPS #None
+        self.level_list = None
         self.gui = Gui((640, 360))
         self.level_id = 0
         self.level = None
@@ -75,7 +85,7 @@ class Main:
     def load_level_list(self):
         """Resets the level list from database
         """
-        self.level_list = LEVEL_MAPS #DB_CONNECTION.get_map_data()
+        self.level_list = DB_CONNECTION.get_map_data()
 
     def build_essentials(self):
         """A method which resets important objects for loading a different level
@@ -146,6 +156,8 @@ class Main:
             self.start_menu()
         if state == 3:
             self.level_id += 1
+            if self.level_id == len(self.level_list):
+                self.level_id = 0
             self.store_player_data()
             self.build_essentials()
             self.load_player_data()
