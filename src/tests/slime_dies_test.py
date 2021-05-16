@@ -14,8 +14,8 @@ class TestEnemy(unittest.TestCase):
     def setUp(self):
         self.level_1 = Level(LEVEL_MAP, CELL_SIZE)
 
-    def assert_enemy_is_dead(self):
-        self.assertEqual(len(self.level_1.enemies), 0)
+    def assert_enemy_is_dead(self, enemy):
+        self.assertEqual(enemy.current_health, 0)
     
     def assert_enemy_takes_damage(self, enemy, hitpoints):
         self.assertEqual(enemy.current_health, hitpoints)
@@ -25,6 +25,7 @@ class TestEnemy(unittest.TestCase):
 
     def test_enemy_takes_damage_and_dies(self):
         for enemy in self.level_1.enemies:
+            enemy.current_health = 5
             self.assert_should_move_working_properly(enemy, None, False)
             self.assert_should_move_working_properly(enemy, 200, False)
             self.assert_should_move_working_properly(enemy, 1800, True)
@@ -39,4 +40,4 @@ class TestEnemy(unittest.TestCase):
             enemy.hurt()
             self.assert_enemy_takes_damage(enemy, 1)
             enemy.hurt()
-            self.assert_enemy_is_dead()
+            self.assert_enemy_is_dead(enemy)

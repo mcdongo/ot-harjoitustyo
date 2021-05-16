@@ -64,21 +64,13 @@ class Entity(pg.sprite.Sprite):
             path = queue.pop(0)
             cur_pos = path[-1]
 
-            """for test_pos in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                if level_map[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]] != 1:
-                    if not visited[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]]:
-                        new_path = list(path)
-                        new_path.append((cur_pos[0]+test_pos[0], cur_pos[1]+test_pos[1]))
-                        queue.append(new_path)
-                        visited[cur_pos[0]+test_pos[0]][cur_pos[1]+test_pos[1]] = True"""
-
             if level_map[cur_pos[0]-1][cur_pos[1]] != 1:
                 if not visited[cur_pos[0]-1][cur_pos[1]]:
                     new_path = list(path)
                     new_path.append((cur_pos[0]-1, cur_pos[1]))
                     queue.append(new_path)
                     visited[cur_pos[0]-1][cur_pos[1]] = True
-            
+
             if level_map[cur_pos[0]+1][cur_pos[1]] != 1:
                 if not visited[cur_pos[0]+1][cur_pos[1]]:
                     new_path = list(path)

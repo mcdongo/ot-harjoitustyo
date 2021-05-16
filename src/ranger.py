@@ -21,11 +21,11 @@ class Ranger(Entity):
     """
     def __init__(self, map_pos_x, map_pos_y, pos_x, pos_y):
         super().__init__(map_pos_x, map_pos_y)
-        
+
         self.previous_move_time = 0
         self.move_queue = []
 
-        self.images = [SPRITE_SHEET.load_strip((0, i*50, 50, 50), 4, -1) 
+        self.images = [SPRITE_SHEET.load_strip((0, i*50, 50, 50), 4, -1)
                        for i in range(4)]
         self.direction = 2
         self.image = self.images[self.direction][self.frame]

@@ -41,7 +41,7 @@ class Connection:
         """
         unpickled = pickle.loads(to_unpickle)
         return unpickled
-    
+
     def reset_player_data(self):
         """Resets player data in the database
         """
@@ -49,7 +49,7 @@ class Connection:
         inventory = {"Sword":1,
                      "Shield":1,
                      "Potion":1
-        }
+                    }
         inventory = self.pickle_data(inventory)
         level_id = self.pickle_data(0)
         self.conn.execute("DELETE FROM player_state WHERE id=1")
@@ -83,8 +83,8 @@ class Connection:
             is located in
         """
         data = self.conn.execute(
-                                "SELECT current_health, inventory, level_id FROM player_state"
-                                ).fetchone()
+            "SELECT current_health, inventory, level_id FROM player_state"
+            ).fetchone()
         return (self.unpickle_data(data[0]),
                 self.unpickle_data(data[1]), self.unpickle_data(data[2]))
 

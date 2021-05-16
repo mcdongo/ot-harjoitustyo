@@ -15,7 +15,7 @@ class MenuLoop:
 
     def start(self):
         """The main loop, in charge of handling events
-        
+
         Returns:
             -1 if user wants to quit
             0 if user wants to start a new game
@@ -31,7 +31,7 @@ class MenuLoop:
 
     def _handle_events(self):
         """A method handling user inputted events eg. button presses
-        
+
         Returns:
             -1 if user wants to quit the program
             0 if user wants to start a new game
@@ -55,4 +55,3 @@ class MenuLoop:
         """
         self._renderer.render_menu()
         pg.display.update()
-

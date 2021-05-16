@@ -88,7 +88,7 @@ class Player(Entity):
         else:
             self.shielded = True
             self.image = self.shielded_images[self.direction]
-            
+
     def consume_potion(self):
         """A method which checks if there are any potions left in the inventory
         and consumes one, healing the player by 5 health

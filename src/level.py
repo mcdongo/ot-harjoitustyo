@@ -99,7 +99,8 @@ class Level:
         self.setup_camera()
 
     def setup_camera(self):
-        """A method which makes sure the player in in center of the screen by moving everything else in relation to the player
+        """A method which makes sure the player in in center of the screen by moving everything
+        else in relation to the player
         """
 
         while (self.player.rect.x < 300 or self.player.rect.x > 400):
@@ -145,7 +146,7 @@ class Level:
                 self.move_player(self.player.direction_x/25, self.player.direction_y/25)
         if self.player.attack:
             self.player.update(current_time)
-            
+
 
     def update_enemies(self, current_time):
         """A method which updates all enemies
@@ -177,6 +178,7 @@ class Level:
                     objects.kill()
                 if pg.sprite.collide_rect(self.player, objects):
                     objects.kill()
+                if pg.sprite.collide_rect(self.player, objects):
                     if not (self.player.shielded and abs(objects.direction - self.player.direction) == 2):
                         self.player.hurt()
                 objects.update()

@@ -18,6 +18,8 @@
 |4.5    |4  |Lisäsin vihollisille sekä pelaajalle health barit, pelaaja pystyy suojautumaan nuolilta nostamalla kilven ylös, loin noin puolille luokista ja metodeista docstring-dokumentaatiota ja uusia testejä| 
 |7.5    |2  |Loin aloitusmenun sekä aloitin inventory-järjestelmän kehittelemisen|
 |14.5   |7  |Menu toimii täysin, mahdollisuus tallentaa peli ja jatkaa myöhemmin käyttäen sqlite3-tietokantaa|
+|15.5   |2  |Inventoryn jatkokehitystä: slime-vihollinen hyökkää, ei pysty enää kävellä muiden entiteettien läpi|
+|16.5   |4  |Docstringia, taikajuomien funktionaalisuus, dokumentaatiota|
 
-Yhteensä: 48h
+Yhteensä: 54h
 
